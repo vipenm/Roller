@@ -23,8 +23,30 @@ void UHelper::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	/// Find Physics Handle
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle) {
+		// Physics handle found
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s Physics handle not found"), *GetOwner()->GetName());
+	}
+
+	/// Find Input Component
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("Input component found"));
+		/// Bind input controls
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UHelper::Grab);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s Input component not found"), *GetOwner()->GetName());
+	}
+}
+
+void UHelper::Grab() 
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grab Key Pressed"));
 }
 
 
@@ -42,21 +64,10 @@ void UHelper::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	FVector LineTraceEnd = PlayerViewPoint + PlayerViewPointRotation.Vector() * Reach;
-	/*DrawDebugLine(
-		GetWorld(),
-		PlayerViewPoint,
-		LineTraceEnd,
-		FColor(255, 0, 0),
-		false,
-		0.f,
-		0.f,
-		10.f
-	);*/
 
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
 	/// Line-trace reach distance
-
 	FHitResult LineTraceHit;
 
 	GetWorld()->LineTraceSingleByObjectType(
@@ -71,6 +82,5 @@ void UHelper::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompone
 	if (ActorHit) {
 		UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s"), *(ActorHit->GetName()));
 	}
-
 
 }
