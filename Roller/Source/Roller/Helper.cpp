@@ -20,7 +20,7 @@ void UHelper::BeginPlay()
 	Super::BeginPlay();
 
 	FindPhysicsComponent();
-	FindInputComponent();
+	SetupInput();
 	
 }
 
@@ -45,8 +45,8 @@ void UHelper::FindPhysicsComponent() {
 	}
 }
 
-/// Find and setup input component
-void UHelper::FindInputComponent() {
+/// Setup input
+void UHelper::SetupInput() {
 	
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent) {

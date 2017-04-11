@@ -34,7 +34,7 @@ private:
 
 	void FindPhysicsComponent();
 
-	void FindInputComponent();
+	void SetupInput();
 
 	FVector GetReach();
 
