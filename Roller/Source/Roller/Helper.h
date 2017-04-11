@@ -36,6 +36,10 @@ private:
 
 	void FindInputComponent();
 
+	FVector GetReach();
+
+	FVector GetViewPoint();
+
 	// Return hit for first physics body in reach
-	const FHitResult GetPhysicsBodyInReach();
+	const FHitResult GetPhysicsBody();
 };
