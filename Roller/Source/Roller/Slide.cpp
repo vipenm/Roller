@@ -15,13 +15,28 @@ USlide::USlide()
 }
 
 
+
 // Called when the game starts
 void USlide::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Owner = GetOwner();
+
 	Location = Owner->GetActorLocation();	
 	
+}
+
+void USlide::SlideUp()
+{
+	FVector MovementDirection = FVector(400.f, 0.f, 0.f);
+	Owner->SetActorLocation(Location + MovementDirection);
+}
+
+void USlide::SlideDown()
+{
+	FVector MovementDirection = FVector(-400.f, 0.f, 0.f);
+	Owner->SetActorLocation(Location + MovementDirection);
 }
 
 
@@ -30,12 +45,19 @@ void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponen
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	//if (Location.X == 1230.f) {
-		Owner->SetActorLocation(Location + MovementDirection * DeltaTime);
-	/*}
-	else if (Location.X == 1630.f) {
-		this->GetOwner()->SetActorLocation(Location - MovementDirection * DeltaTime);
-	}*/
-	
+		GetWorld()->GetTimeSeconds();
+		
+		SlideUp();
+
+		if (MovementDirection == FVector(400.f, 0.f, 0.f)) {
+			SlideDown();
+		}
+		if (MovementDirection == FVector(-400.f, 0.f, 0.f)) {
+			SlideUp();
+		}
+
+		
+
+		// Check if its time to slide platform other way
 }
 
