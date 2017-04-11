@@ -48,5 +48,9 @@ void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponen
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );	
 
+	/// If Actor is on Trigger Volume move platform
+	if (Trigger->IsOverlappingActor(TriggeringActor)) {
+		ResetPosition();
+	}
 }
 

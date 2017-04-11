@@ -34,4 +34,7 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 		ATriggerVolume* Trigger;
+
+	UPROPERTY(EditAnywhere)
+		AActor* TriggeringActor;
 };
