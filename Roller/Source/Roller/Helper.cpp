@@ -21,7 +21,6 @@ void UHelper::BeginPlay()
 
 	FindPhysicsComponent();
 	SetupInput();
-	
 }
 
 // Called every frame
