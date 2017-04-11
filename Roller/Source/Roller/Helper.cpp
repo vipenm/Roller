@@ -42,7 +42,7 @@ void UHelper::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	FVector LineTraceEnd = PlayerViewPoint + PlayerViewPointRotation.Vector() * Reach;
-	DrawDebugLine(
+	/*DrawDebugLine(
 		GetWorld(),
 		PlayerViewPoint,
 		LineTraceEnd,
@@ -51,6 +51,26 @@ void UHelper::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompone
 		0.f,
 		0.f,
 		10.f
-		);
+	);*/
+
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+
+	/// Line-trace reach distance
+
+	FHitResult LineTraceHit;
+
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT LineTraceHit,
+		PlayerViewPoint,
+		LineTraceEnd,
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		TraceParameters
+	);
+
+	AActor* ActorHit = LineTraceHit.GetActor();
+	if (ActorHit) {
+		UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s"), *(ActorHit->GetName()));
+	}
+
 
 }
