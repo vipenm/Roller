@@ -29,12 +29,10 @@ private:
 	AActor* Owner;
 	FVector Location;
 	
-	UPROPERTY(EditAnywhere)
-		FVector MovementDirection;
+	FVector MovementDirection;
 	
 	UPROPERTY(EditAnywhere)
 		ATriggerVolume* Trigger;
 
-	UPROPERTY(EditAnywhere)
-		AActor* TriggeringActor;
+	AActor* TriggeringActor;
 };
