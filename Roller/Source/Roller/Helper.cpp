@@ -38,6 +38,7 @@ void UHelper::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Input component found"));
 		/// Bind input controls
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UHelper::Grab);
+		InputComponent->BindAction("Grab", IE_Released, this, &UHelper::Release);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("%s Input component not found"), *GetOwner()->GetName());
@@ -47,6 +48,11 @@ void UHelper::BeginPlay()
 void UHelper::Grab() 
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Key Pressed"));
+}
+
+void UHelper::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grab Key Released"));
 }
 
 
