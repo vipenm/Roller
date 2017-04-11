@@ -25,17 +25,20 @@ void USlide::BeginPlay()
 
 	Location = Owner->GetActorLocation();	
 	
+	SlidePlatform();
+
+	
 }
 
-void USlide::SlideUp()
+void USlide::SlidePlatform()
 {
-	FVector MovementDirection = FVector(400.f, 0.f, 0.f);
+	FVector MovementDirection = FVector(1000.f, 0.f, 0.f);
 	Owner->SetActorLocation(Location + MovementDirection);
 }
 
-void USlide::SlideDown()
+void USlide::ResetPosition()
 {
-	FVector MovementDirection = FVector(-400.f, 0.f, 0.f);
+	FVector MovementDirection = FVector(0.f, 0.f, 0.f);
 	Owner->SetActorLocation(Location + MovementDirection);
 }
 
@@ -43,21 +46,7 @@ void USlide::SlideDown()
 // Called every frame
 void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );	
 
-		GetWorld()->GetTimeSeconds();
-		
-		SlideUp();
-
-		if (MovementDirection == FVector(400.f, 0.f, 0.f)) {
-			SlideDown();
-		}
-		if (MovementDirection == FVector(-400.f, 0.f, 0.f)) {
-			SlideUp();
-		}
-
-		
-
-		// Check if its time to slide platform other way
 }
 

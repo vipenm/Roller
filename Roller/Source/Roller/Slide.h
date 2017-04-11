@@ -18,23 +18,20 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void SlideUp();
-	void SlideDown();
+	void SlidePlatform();
+	void ResetPosition();
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
-
-	FVector Location;
+	
 	AActor* Owner;
+	FVector Location;
 	
 	UPROPERTY(EditAnywhere)
 		FVector MovementDirection;
-
-	UPROPERTY(EditAnywhere)
-		float SlideDelay = 1.0f;
-
-	float LastSlideTime;
 	
+	UPROPERTY(EditAnywhere)
+		ATriggerVolume* Trigger;
 };
