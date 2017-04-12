@@ -28,7 +28,6 @@ void USlide::BeginPlay()
 	SlidePlatform();
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
-
 	
 }
 
