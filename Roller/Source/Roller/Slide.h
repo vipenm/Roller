@@ -5,6 +5,8 @@
 #include "Components/ActorComponent.h"
 #include "Slide.generated.h"
 
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSlide);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSlide);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -19,11 +21,15 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void SlidePlatform();
+	void SetInitialPlatformLocation();
 	void ResetPosition();
+	void SlidePlatform();
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+
+	/*UPROPERTY(BlueprintAssignable)
+		FOnSlide OnSlide;*/
 
 	UPROPERTY(BlueprintAssignable)
 		FOnSlide OnSlide;

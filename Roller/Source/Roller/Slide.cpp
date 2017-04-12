@@ -24,7 +24,7 @@ void USlide::BeginPlay()
 
 	Location = Owner->GetActorLocation();	
 	
-	SlidePlatform();
+	SetInitialPlatformLocation();
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
@@ -37,13 +37,12 @@ void USlide::BeginPlay()
 	
 }
 
-void USlide::SlidePlatform()
+void USlide::SetInitialPlatformLocation()
 {
-	//if (!Owner) { return; }
+	if (!Owner) { return; }
 
-	//Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
+	Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
 
-	OnSlide.Broadcast();
 }
 
 void USlide::ResetPosition()
@@ -51,14 +50,21 @@ void USlide::ResetPosition()
 	if (!Owner) { return; }
 	
 	Owner->SetActorLocation(Location);
+
 }
 
+void USlide::SlidePlatform() 
+{
+	OnSlide.Broadcast(); // TODO Create call in BP Event Graph to slide back and forth - Lecture 92-93
+}
 
 // Called every frame
 void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );	
+
 	if (!Trigger) {	return; }
+
 	/// If Actor is on Trigger Volume, move platform
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 		ResetPosition();
