@@ -1,12 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Roller.h"
-#include "Helper.h"
+#include "Interaction.h"
 
-#define OUT
 
 // Sets default values for this component's properties
-UHelper::UHelper()
+UInteraction::UInteraction()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -14,8 +13,9 @@ UHelper::UHelper()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+
 // Called when the game starts
-void UHelper::BeginPlay()
+void UInteraction::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -23,10 +23,11 @@ void UHelper::BeginPlay()
 	SetupInput();
 }
 
+
 // Called every frame
-void UHelper::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UInteraction::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
 	// If the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent) {
@@ -36,7 +37,7 @@ void UHelper::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponen
 }
 
 /// Find physics handle component
-void UHelper::FindPhysicsComponent() {
+void UInteraction::FindPhysicsComponent() {
 
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (!PhysicsHandle) {
@@ -45,13 +46,13 @@ void UHelper::FindPhysicsComponent() {
 }
 
 /// Setup input
-void UHelper::SetupInput() {
-	
+void UInteraction::SetupInput() {
+
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent) {
 		/// Bind input controls
-		InputComponent->BindAction("Grab", IE_Pressed, this, &UHelper::Grab);
-		InputComponent->BindAction("Grab", IE_Released, this, &UHelper::Release);
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UInteraction::Grab);
+		InputComponent->BindAction("Grab", IE_Released, this, &UInteraction::Release);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("%s Input component not found"), *GetOwner()->GetName());
@@ -59,7 +60,7 @@ void UHelper::SetupInput() {
 }
 
 /// Grab the object
-void UHelper::Grab() 
+void UInteraction::Grab()
 {
 	/// Try and reach any actors with physics body collision channel set
 	auto HitResult = GetPhysicsBody();
@@ -80,13 +81,13 @@ void UHelper::Grab()
 }
 
 /// Release the object
-void UHelper::Release()
+void UInteraction::Release()
 {
 	PhysicsHandle->ReleaseComponent();
 }
 
 /// Get the object with a physics body within reach
-const FHitResult UHelper::GetPhysicsBody()
+const FHitResult UInteraction::GetPhysicsBody()
 {
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
@@ -105,7 +106,7 @@ const FHitResult UHelper::GetPhysicsBody()
 }
 
 /// Get the viewpoint of the player
-FVector UHelper::GetViewPoint()
+FVector UInteraction::GetViewPoint()
 {
 	FVector PlayerViewPoint;
 	FRotator PlayerViewPointRotation;
@@ -118,7 +119,7 @@ FVector UHelper::GetViewPoint()
 }
 
 /// Get the reach of the player
-FVector UHelper::GetReach()
+FVector UInteraction::GetReach()
 {
 	FVector PlayerViewPoint;
 	FRotator PlayerViewPointRotation;
