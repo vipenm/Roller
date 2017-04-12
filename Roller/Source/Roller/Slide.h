@@ -29,6 +29,7 @@ private:
 	AActor* Owner = nullptr;
 	FVector Location;
 	
+	UPROPERTY(EditAnywhere)
 	FVector MovementDirection;
 	
 	UPROPERTY(EditAnywhere)

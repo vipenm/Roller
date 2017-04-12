@@ -42,15 +42,15 @@ void USlide::BeginPlay()
 void USlide::SlidePlatform()
 {
 	if (!Owner) { return; }
-	FVector MovementDirection = FVector(1000.f, 0.f, 0.f);
-	Owner->SetActorLocation(Location + MovementDirection);
+
+	Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
 }
 
 void USlide::ResetPosition()
 {
 	if (!Owner) { return; }
-	FVector MovementDirection = FVector(0.f, 0.f, 0.f);
-	Owner->SetActorLocation(Location + MovementDirection);
+	
+	Owner->SetActorLocation(Location);
 }
 
 
