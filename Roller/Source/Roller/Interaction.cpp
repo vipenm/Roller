@@ -21,6 +21,7 @@ void UInteraction::BeginPlay()
 
 	FindPhysicsComponent();
 	SetupInput();
+
 }
 
 
@@ -28,6 +29,8 @@ void UInteraction::BeginPlay()
 void UInteraction::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+	if (!PhysicsHandle) { return; }
 
 	// If the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent) {
@@ -40,8 +43,9 @@ void UInteraction::TickComponent( float DeltaTime, ELevelTick TickType, FActorCo
 void UInteraction::FindPhysicsComponent() {
 
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if (!PhysicsHandle) {
-		UE_LOG(LogTemp, Error, TEXT("%s Physics handle not found"), *GetOwner()->GetName());
+
+	if (PhysicsHandle == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("%s missing physics handle"), *GetOwner()->GetName());
 	}
 }
 
@@ -67,6 +71,7 @@ void UInteraction::Grab()
 	auto ComponentToGrab = HitResult.GetComponent();
 	auto ActorHit = HitResult.GetActor();
 
+	if (!PhysicsHandle) { return; }
 
 	// If we hit something
 	if (ActorHit) {
@@ -83,6 +88,7 @@ void UInteraction::Grab()
 /// Release the object
 void UInteraction::Release()
 {
+	if (!PhysicsHandle) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 

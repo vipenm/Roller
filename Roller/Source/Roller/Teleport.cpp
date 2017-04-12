@@ -12,7 +12,6 @@ UTeleport::UTeleport()
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -26,6 +25,13 @@ void UTeleport::BeginPlay()
 	Location = Owner->GetActorLocation();
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if (TriggeringActor == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
+	}
+	if (Trigger == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
+	}
 	
 }
 
@@ -34,6 +40,8 @@ void UTeleport::BeginPlay()
 void UTeleport::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+	if (!Trigger) { return; }
 
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 		Location.Z += 75.f;

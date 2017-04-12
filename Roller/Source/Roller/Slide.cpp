@@ -11,7 +11,6 @@ USlide::USlide()
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -23,22 +22,33 @@ void USlide::BeginPlay()
 
 	Owner = GetOwner();
 
+	if (!Owner) { return; }
+
 	Location = Owner->GetActorLocation();	
 	
 	SlidePlatform();
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if (TriggeringActor == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
+	}
+	if (Trigger == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
+	}
 	
 }
 
 void USlide::SlidePlatform()
 {
+	if (!Owner) { return; }
 	FVector MovementDirection = FVector(1000.f, 0.f, 0.f);
 	Owner->SetActorLocation(Location + MovementDirection);
 }
 
 void USlide::ResetPosition()
 {
+	if (!Owner) { return; }
 	FVector MovementDirection = FVector(0.f, 0.f, 0.f);
 	Owner->SetActorLocation(Location + MovementDirection);
 }
@@ -48,7 +58,7 @@ void USlide::ResetPosition()
 void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );	
-
+	if (!Trigger) {	return; }
 	/// If Actor is on Trigger Volume, move platform
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 		ResetPosition();

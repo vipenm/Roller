@@ -23,14 +23,14 @@ public:
 
 private:
 
-	AActor* Owner;
+	AActor* Owner = nullptr;
 
 	FVector Location;
 
 	UPROPERTY(EditAnywhere)
-		ATriggerVolume* Trigger;
+		ATriggerVolume* Trigger = nullptr;
 
-	AActor* TriggeringActor;
+	AActor* TriggeringActor = nullptr;
 		
 	
 };
