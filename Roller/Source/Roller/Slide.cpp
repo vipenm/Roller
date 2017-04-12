@@ -13,8 +13,6 @@ USlide::USlide()
 
 }
 
-
-
 // Called when the game starts
 void USlide::BeginPlay()
 {
@@ -41,9 +39,11 @@ void USlide::BeginPlay()
 
 void USlide::SlidePlatform()
 {
-	if (!Owner) { return; }
+	//if (!Owner) { return; }
 
-	Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
+	//Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
+
+	OnSlide.Broadcast();
 }
 
 void USlide::ResetPosition()
@@ -64,4 +64,3 @@ void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponen
 		ResetPosition();
 	}
 }
-

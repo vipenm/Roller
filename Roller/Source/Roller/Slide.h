@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "Slide.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSlide);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ROLLER_API USlide : public UActorComponent
@@ -23,6 +24,9 @@ public:
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+
+	UPROPERTY(BlueprintAssignable)
+		FOnSlide OnSlide;
 
 private:
 	
