@@ -29,17 +29,10 @@ void USlide::BeginPlay()
 	SetInitialPlatformLocation();
 	SlidePlatform();
 
-	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
-		SecondTriggeringActor; //TODO assign triggering actor (cube)
-	}
-
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 	
 
 	if (TriggeringActor == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
-	}
-	if (SecondTriggeringActor == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
 	}
 	if (Trigger == nullptr) {
@@ -76,7 +69,7 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	if (!Trigger) { return; }
 
 	/// If Actor is on Trigger Volume, move platform
-	if (Trigger->IsOverlappingActor(TriggeringActor) || Trigger->IsOverlappingActor(SecondTriggeringActor)) {
+	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 
 		ResetPosition();
 
@@ -86,7 +79,7 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	}
 
 	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
-		if (GetWorld()->GetTimeSeconds() - LastTimeSlide > ResetDelay) {
+		if (GetWorld()->GetTimeSeconds() - LastTimeSlide > ResetDelay) { // TODO change delay so time limit to cross bridge
 			SetInitialPlatformLocation();
 		}
 	}

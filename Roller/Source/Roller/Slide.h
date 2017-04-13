@@ -50,7 +50,5 @@ private:
 
 	float LastTimeSlide;
 
-	AActor* TriggeringActor - nullptr;
-
-	AActor* SecondTriggeringActor = nullptr;
+	AActor* TriggeringActor = nullptr;
 };
