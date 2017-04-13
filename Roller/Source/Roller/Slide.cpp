@@ -3,6 +3,8 @@
 #include "Roller.h"
 #include "Slide.h"
 
+#define OUT
+
 // Sets default values for this component's properties
 USlide::USlide()
 {
@@ -27,9 +29,17 @@ void USlide::BeginPlay()
 	SetInitialPlatformLocation();
 	SlidePlatform();
 
+	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
+		SecondTriggeringActor; //TODO assign triggering actor (cube)
+	}
+
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+	
 
 	if (TriggeringActor == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
+	}
+	if (SecondTriggeringActor == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
 	}
 	if (Trigger == nullptr) {
@@ -66,7 +76,7 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	if (!Trigger) { return; }
 
 	/// If Actor is on Trigger Volume, move platform
-	if (Trigger->IsOverlappingActor(TriggeringActor)) {
+	if (Trigger->IsOverlappingActor(TriggeringActor) || Trigger->IsOverlappingActor(SecondTriggeringActor)) {
 
 		ResetPosition();
 
@@ -77,7 +87,6 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
 		if (GetWorld()->GetTimeSeconds() - LastTimeSlide > ResetDelay) {
-			//Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
 			SetInitialPlatformLocation();
 		}
 	}
