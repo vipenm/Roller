@@ -43,5 +43,26 @@ private:
 
 	// Current rotation speed
 	float CurrentRotationSpeed;
+
+	float Reach = 100.f;
+
+	/*UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	UInputComponent* InputComponent = nullptr;
+
+	void Grab();
+
+	void Release();
+
+	void FindPhysicsComponent();
+
+	void SetupInput();
+
+	FVector GetReach();
+
+	FVector GetViewPoint();
+
+	// Return hit for first physics body in reach
+	const FHitResult GetPhysicsBody();*/
 	
 };

@@ -22,7 +22,6 @@ void UInteraction::BeginPlay()
 
 	FindPhysicsComponent();
 	SetupInput();
-
 }
 
 

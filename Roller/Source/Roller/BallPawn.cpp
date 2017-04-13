@@ -3,6 +3,10 @@
 #include "Roller.h"
 #include "BallPawn.h"
 
+#include "Interaction.h"
+
+//#define OUT
+
 // Sets default values
 ABallPawn::ABallPawn()
 {
@@ -45,8 +49,7 @@ void ABallPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetActorLocation(FVector(7.2f, -4.1f, 70.26f));
-	
+	SetActorLocation(FVector(7.2f, -4.1f, 70.26f));	
 }
 
 // Called every frame
@@ -62,8 +65,7 @@ void ABallPawn::Tick( float DeltaTime )
 	FRotator DeltaRotation(0, 0, 0);
 	DeltaRotation.Yaw = CurrentRotationSpeed * DeltaTime;
 	// Rotate ball
-	AddActorLocalRotation(DeltaRotation);
-
+	AddActorLocalRotation(DeltaRotation);
 }
 
 // Called to bind functionality to input
@@ -106,4 +108,3 @@ void ABallPawn::MoveRightInput(float Val)
 		CurrentRotationSpeed = 0;
 	}
 }
-
