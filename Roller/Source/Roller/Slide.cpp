@@ -25,6 +25,7 @@ void USlide::BeginPlay()
 	Location = Owner->GetActorLocation();	
 	
 	SetInitialPlatformLocation();
+	SlidePlatform();
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
