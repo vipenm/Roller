@@ -3,6 +3,9 @@
 #include "Roller.h"
 #include "RollerGameMode.h"
 
+#include "BallPawn.h"
 
-
-
+ARollerGameMode::ARollerGameMode()
+{
+	DefaultPawnClass = ABallPawn::StaticClass();
+}

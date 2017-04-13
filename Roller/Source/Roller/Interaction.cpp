@@ -3,6 +3,7 @@
 #include "Roller.h"
 #include "Interaction.h"
 
+#define OUT
 
 // Sets default values for this component's properties
 UInteraction::UInteraction()
