@@ -45,5 +45,10 @@ private:
 	UPROPERTY(EditAnywhere)
 		ATriggerVolume* Trigger = nullptr;
 
+	UPROPERTY(EditAnywhere)
+		float ResetDelay = 1.0f;
+
+	float LastTimeSlide;
+
 	AActor* TriggeringActor = nullptr;
 };

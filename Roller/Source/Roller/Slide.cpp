@@ -22,8 +22,8 @@ void USlide::BeginPlay()
 
 	if (!Owner) { return; }
 
-	Location = Owner->GetActorLocation();	
-	
+	Location = Owner->GetActorLocation();
+
 	SetInitialPlatformLocation();
 	SlidePlatform();
 
@@ -35,7 +35,6 @@ void USlide::BeginPlay()
 	if (Trigger == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
 	}
-	
 }
 
 void USlide::SetInitialPlatformLocation()
@@ -49,25 +48,37 @@ void USlide::SetInitialPlatformLocation()
 void USlide::ResetPosition()
 {
 	if (!Owner) { return; }
-	
+
 	Owner->SetActorLocation(Location);
 
 }
 
-void USlide::SlidePlatform() 
+void USlide::SlidePlatform()
 {
-	OnSlide.Broadcast(); // TODO Create call in BP Event Graph to slide back and forth - Lecture 92-93
+	OnSlide.Broadcast();
 }
 
 // Called every frame
-void USlide::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );	
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (!Trigger) {	return; }
+	if (!Trigger) { return; }
 
 	/// If Actor is on Trigger Volume, move platform
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
+
 		ResetPosition();
+
+		if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
+			LastTimeSlide = GetWorld()->GetTimeSeconds();
+		}
+	}
+
+	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
+		if (GetWorld()->GetTimeSeconds() - LastTimeSlide > ResetDelay) {
+			//Owner->SetActorLocation(Location + FVector(MovementDirection.X, MovementDirection.Y, MovementDirection.Z));
+			SetInitialPlatformLocation();
+		}
 	}
 }
