@@ -13,7 +13,5 @@ class ROLLER_API ARollerGameMode : public AGameMode
 {
 	GENERATED_BODY()
 	
-public:
-	ARollerGameMode();	
 	
 };
