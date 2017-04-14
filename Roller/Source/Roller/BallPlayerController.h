@@ -18,5 +18,8 @@ class ROLLER_API ABallPlayerController : public APlayerController
 public:
 	ABall* GetControlledBall() const;
 	
-	
+	virtual void BeginPlay() override;
+
+	// Called every frame
+	virtual void Tick(float DeltaSeconds) override;
 };
