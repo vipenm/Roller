@@ -32,3 +32,10 @@ void ABall::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	Super::SetupPlayerInputComponent(InputComponent);
 
 }
+
+void ABall::SetSpeed(float Speed) {
+	auto Name = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%f Speed of %s"), Speed, *Name);
+
+	// TODO clamp speed so player can't override
+}
