@@ -3,6 +3,8 @@
 #include "Roller.h"
 #include "TP_RollingBall.h"
 
+#define OUT
+
 ATP_RollingBall::ATP_RollingBall()
 {
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("/Game/Rolling/Meshes/BallMesh.BallMesh"));
@@ -24,8 +26,8 @@ ATP_RollingBall::ATP_RollingBall()
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bAbsoluteRotation = true; // Rotation of the ball should not affect rotation of boom
-	SpringArm->RelativeRotation = FRotator(-45.f, 0.f, 0.f);
-	SpringArm->TargetArmLength = 1200.f;
+	SpringArm->RelativeRotation = FRotator(-30.f, 0.f, 0.f);
+	SpringArm->TargetArmLength = 500.f;
 	SpringArm->bEnableCameraLag = false;
 	SpringArm->CameraLagSpeed = 3.f;
 
@@ -35,9 +37,23 @@ ATP_RollingBall::ATP_RollingBall()
 	Camera->bUsePawnControlRotation = false; // We don't want the controller rotating the camera
 
 	// Set up forces
-	RollTorque = 50000000.0f;
-	JumpImpulse = 350000.0f;
+	RollTorque = 4000000.0f;
+	JumpImpulse = 35000.0f;
 	bCanJump = true; // Start being able to jump
+}
+
+// Called every frame
+void ATP_RollingBall::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation
+	);
+	UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
 }
 
 
@@ -54,12 +70,13 @@ void ATP_RollingBall::MoveRight(float Val)
 {
 	const FVector Torque = FVector(-1.f * Val * RollTorque, 0.f, 0.f);
 	Ball->AddTorque(Torque);
+	
 }
 
 void ATP_RollingBall::MoveForward(float Val)
 {
 	const FVector Torque = FVector(0.f, Val * RollTorque, 0.f);
-	Ball->AddTorque(Torque);	
+	Ball->AddTorque(Torque);
 }
 
 void ATP_RollingBall::Jump()

@@ -28,7 +28,7 @@ public:
 	float JumpImpulse;
 
 	/** Torque to apply when trying to roll ball */
-	UPROPERTY(EditAnywhere, Category=Ball)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Ball)
 	float RollTorque;
 
 	/** Indicates whether we can currently jump, use to prevent double jumping */
@@ -60,4 +60,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetSpringArm() const { return SpringArm; }
 	/** Returns Camera subobject **/
 	FORCEINLINE class UCameraComponent* GetCamera() const { return Camera; }
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	FRotator PlayerViewPointRotation;
 };
