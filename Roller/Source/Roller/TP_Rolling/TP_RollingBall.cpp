@@ -22,7 +22,7 @@ ATP_RollingBall::ATP_RollingBall()
 	RootComponent = Ball;
 
 	// Create a camera boom attached to the root (ball)
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm0"));
+	/*SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm0"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bAbsoluteRotation = true; // Rotation of the ball should not affect rotation of boom
@@ -34,7 +34,7 @@ ATP_RollingBall::ATP_RollingBall()
 	// Create a camera and attach to boom
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera0"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-	Camera->bUsePawnControlRotation = false; // We don't want the controller rotating the camera
+	Camera->bUsePawnControlRotation = false; // We don't want the controller rotating the camera*/
 
 	// Set up forces
 	RollTorque = 4000000.0f;
@@ -46,14 +46,6 @@ ATP_RollingBall::ATP_RollingBall()
 void ATP_RollingBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-		OUT PlayerViewPointLocation,
-		OUT PlayerViewPointRotation
-	);
-	UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
 }
 
 
