@@ -16,7 +16,6 @@ UInteractor::UInteractor()
 
 }
 
-
 // Called when the game starts
 void UInteractor::BeginPlay()
 {
@@ -32,6 +31,30 @@ void UInteractor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+
+
+	if (PhysicsHandle->GrabbedComponent) {
+		PhysicsHandle->SetTargetLocation(GetReachEnd());
+	}
+}
+
+FVector UInteractor::GetReachStart() 
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation
+	);
+
+	PlayerViewPointLocation += (FVector(0.f, 0.f, -70.f));
+
+	return PlayerViewPointLocation; // return start of reach
+
+}
+
+FVector UInteractor::GetReachEnd() 
+{
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
@@ -43,14 +66,12 @@ void UInteractor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
 
-	if (PhysicsHandle->GrabbedComponent) {
-		PhysicsHandle->SetTargetLocation(LineTraceEnd);
-	}
+	return LineTraceEnd; // return reach
 }
 
 void UInteractor::SetupPhysicsHandle()
 {
-	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>(); // find physics handle component
 
 	if (!PhysicsHandle) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing physics handle"), *GetOwner()->GetName());
@@ -59,7 +80,7 @@ void UInteractor::SetupPhysicsHandle()
 
 void UInteractor::SetupInputComponent()
 {
-	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>(); // find input component
 
 	if (InputComponent) {
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UInteractor::Grabbed);
@@ -91,35 +112,19 @@ void UInteractor::Released()
 	PhysicsHandle->ReleaseComponent();
 }
 
-FHitResult UInteractor::GetObjectInReach() const
+FHitResult UInteractor::GetObjectInReach()
 {
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-		OUT PlayerViewPointLocation,
-		OUT PlayerViewPointRotation
-	);
-
-	PlayerViewPointLocation += (FVector(0.f, 0.f, -70.f));
-
-	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
-
+	// line trace to reach distance
 	FHitResult LineTraceHit;
-
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT LineTraceHit,
-		PlayerViewPointLocation,
-		LineTraceEnd,
+		GetReachStart(),
+		GetReachEnd(),
 		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
 		TraceParameters
 	);
-
-	AActor* ActorHit = LineTraceHit.GetActor();
-	if (ActorHit) {
-		UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s"), *(ActorHit->GetName()));
-	}
 
 	return LineTraceHit;
 }

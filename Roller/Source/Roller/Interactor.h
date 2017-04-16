@@ -34,7 +34,14 @@ private:
 	// Find and setup input component
 	void SetupInputComponent();
 
-	FHitResult GetObjectInReach() const;
+	// Get the reach of the player
+	FVector GetReachEnd();
+
+	// Get reach start location
+	FVector GetReachStart();
+
+	// Find the first object in reach
+	FHitResult GetObjectInReach();
 
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 
