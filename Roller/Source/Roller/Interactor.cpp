@@ -32,24 +32,25 @@ void UInteractor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCom
 
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation
+	);
 
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
+	PlayerViewPointLocation += (FVector(0.f, 0.f, -70.f));
 
-	PlayerViewPointLocation += FVector(300.f, 0.f, -70.f);
+	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
 
-	UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-
-	FVector ReachEnd = PlayerViewPointLocation + FVector(300.0f, 0.0f, 100.0f);
-
+	/// Draw a red trace in the world to visualise
 	DrawDebugLine(
 		GetWorld(),
 		PlayerViewPointLocation,
-		ReachEnd,
+		LineTraceEnd,
 		FColor(255, 0, 0),
 		false,
-		0.0f,
-		0.0f,
-		10.f
+		0.f,
+		0.f,
+		10.0f
 	);
 }
 
