@@ -22,6 +22,24 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
+	// Grab object in reach
+	void Grabbed();
+
+	// Release grabbed object
+	void Released();
+
+	// Find and setup physics handle
+	void SetupPhysicsHandle();
+
+	// Find and setup input component
+	void SetupInputComponent();
+
+	FHitResult GetObjectInReach() const;
+
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	UInputComponent* InputComponent = nullptr;
+
 	float Reach = 400.0f;
 	
 };
