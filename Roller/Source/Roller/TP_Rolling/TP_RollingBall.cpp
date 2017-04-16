@@ -22,8 +22,8 @@ ATP_RollingBall::ATP_RollingBall()
 	RootComponent = Ball;
 
 	// Set up forces
-	RollTorque = 4000000.0f;
-	JumpImpulse = 75000.0f;
+	RollTorque = 90000000.0f;
+	JumpImpulse = 2500000.0f;
 	bCanJump = true; // Start being able to jump
 }
 
