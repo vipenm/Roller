@@ -15,6 +15,8 @@ class ATP_RollingBall : public APawn
 public:
 	ATP_RollingBall();
 
+	void AimAt(FVector HitLocation);
+
 	/** Vertical impulse to apply when pressing jump */
 	UPROPERTY(EditAnywhere, Category=Ball)
 	float JumpImpulse;
@@ -25,6 +27,8 @@ public:
 
 	/** Indicates whether we can currently jump, use to prevent double jumping */
 	bool bCanJump;
+
+	
 
 protected:
 

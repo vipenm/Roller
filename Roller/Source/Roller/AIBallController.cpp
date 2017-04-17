@@ -24,6 +24,10 @@ void AAIBallController::BeginPlay()
 void AAIBallController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (GetPlayerBall()) {
+		GetControlledBall()->AimAt(GetPlayerBall()->GetActorLocation());
+	}
 }
 
 ATP_RollingBall* AAIBallController::GetControlledBall() const

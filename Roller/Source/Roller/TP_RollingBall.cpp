@@ -71,3 +71,9 @@ void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor*
 
 	bCanJump = true;
 }
+
+void ATP_RollingBall::AimAt(FVector HitLocation) 
+{
+	auto OurBallName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurBallName, *HitLocation.ToString());
+}
