@@ -6,13 +6,12 @@
 void ABallPlayerController::BeginPlay() 
 {
 	Super::BeginPlay();
-
 	auto ControlledBall = GetControlledBall();
 	if (!ControlledBall) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing ball"));
+		UE_LOG(LogTemp, Warning, TEXT("Ball player controller not possessing a ball"));
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledBall->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("Ball player controller possessing: %s"), *GetControlledBall()->GetName());
 	}
 }
 
@@ -22,8 +21,7 @@ void ABallPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-ABall* ABallPlayerController::GetControlledBall() const 
+ATP_RollingBall* ABallPlayerController::GetControlledBall() const
 {
-	return Cast<ABall>(GetPawn());
+	return Cast<ATP_RollingBall>(GetPawn());
 }
-

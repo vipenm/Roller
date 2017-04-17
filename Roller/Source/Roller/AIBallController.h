@@ -4,22 +4,22 @@
 
 #include "TP_RollingBall.h"
 
-#include "GameFramework/PlayerController.h"
-#include "BallPlayerController.generated.h"
+#include "AIController.h"
+#include "AIBallController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ROLLER_API ABallPlayerController : public APlayerController
+class ROLLER_API AAIBallController : public AAIController
 {
 	GENERATED_BODY()
-	
+
 public:
-	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
 	ATP_RollingBall* GetControlledBall() const;
+
 };
