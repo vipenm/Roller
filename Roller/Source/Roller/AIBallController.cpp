@@ -7,12 +7,16 @@
 void AAIBallController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	auto PlayerBall = GetPlayerBall();
 	auto ControlledBall = GetControlledBall();
+
+	if (!PlayerBall) {
+		UE_LOG(LogTemp, Warning, TEXT("AI controller cant find player ball"));
+	}
+
 	if (!ControlledBall) {
 		UE_LOG(LogTemp, Warning, TEXT("AI ball player controller not possessing a ball"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI ball player controller possessing: %s"), *GetControlledBall()->GetName());
 	}
 }
 
@@ -25,4 +29,13 @@ void AAIBallController::Tick(float DeltaTime)
 ATP_RollingBall* AAIBallController::GetControlledBall() const
 {
 	return Cast<ATP_RollingBall>(GetPawn());
+}
+
+ATP_RollingBall* AAIBallController::GetPlayerBall() const 
+{
+	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if (!PlayerPawn) { return nullptr; }
+
+	return Cast<ATP_RollingBall>(PlayerPawn);
 }

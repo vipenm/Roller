@@ -22,4 +22,6 @@ public:
 
 	ATP_RollingBall* GetControlledBall() const;
 
+	ATP_RollingBall* GetPlayerBall() const;
+
 };

@@ -10,9 +10,6 @@ void ABallPlayerController::BeginPlay()
 	if (!ControlledBall) {
 		UE_LOG(LogTemp, Warning, TEXT("Ball player controller not possessing a ball"));
 	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Ball player controller possessing: %s"), *GetControlledBall()->GetName());
-	}
 }
 
 // Called every frame
