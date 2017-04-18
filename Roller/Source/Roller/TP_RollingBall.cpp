@@ -76,8 +76,7 @@ void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor*
 
 void ATP_RollingBall::AimAt(FVector HitLocation) 
 {
-	BallAimingComponent->AimAt(HitLocation);
-	auto OurBallName = GetName();
+	BallAimingComponent->AimAt(HitLocation, FireSpeed);
 }
 
 void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet) 

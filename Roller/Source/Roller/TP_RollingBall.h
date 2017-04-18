@@ -31,8 +31,6 @@ public:
 	/** Indicates whether we can currently jump, use to prevent double jumping */
 	bool bCanJump;
 
-	
-
 protected:
 
 	/** Called for side to side input */
@@ -61,4 +59,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category= Setup)
 	void SetBallReference(UStaticMeshComponent* BallToSet);
+
+private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float FireSpeed = 10000;
 };

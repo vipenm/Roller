@@ -34,11 +34,9 @@ void UBallAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UBallAimingComponent::AimAt(FVector HitLocation) 
+void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed) 
 {
-	auto OurBallName = GetOwner()->GetName();
-	auto BallLocation = Ball->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurBallName, *HitLocation.ToString(), *BallLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), FireSpeed);
 }
 
 void UBallAimingComponent::SetBallReference(UStaticMeshComponent* BallToSet) 
