@@ -90,13 +90,18 @@ void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet)
 
 void ATP_RollingBall::Fire() 
 {
-	if (!Ball) { return; }
+	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime;
 
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBlueprint,
-		Ball->GetSocketLocation(FName("Projectile")),
-		Ball->GetSocketRotation(FName("Projectile"))
-		);
+	if (Ball && bIsReloaded) {
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Ball->GetSocketLocation(FName("Projectile")),
+			Ball->GetSocketRotation(FName("Projectile"))
+			);
 
-	Projectile->LaunchProjectile(FireSpeed);
+		Projectile->LaunchProjectile(FireSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+	}
+
+	
 }
