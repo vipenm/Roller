@@ -1,5 +1,8 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once
+
+#include "BallAimingComponent.h"
+
 #include "GameFramework/Pawn.h"
 #include "TP_RollingBall.generated.h"
 
@@ -43,15 +46,19 @@ protected:
 
 	// AActor interface
 	virtual void NotifyHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
-	// End of AActor interface
 
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-	// End of APawn interface
+
+	UBallAimingComponent* BallAimingComponent = nullptr;
+
 
 public:
 	/** Returns Ball subobject **/
 	FORCEINLINE class UStaticMeshComponent* GetBall() const { return Ball; }
 
 	virtual void Tick(float DeltaSeconds) override;
+
+	UFUNCTION(BlueprintCallable, Category= Setup)
+	void SetBallReference(UStaticMeshComponent* BallToSet);
 };

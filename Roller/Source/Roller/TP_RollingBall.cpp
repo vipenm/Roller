@@ -21,6 +21,8 @@ ATP_RollingBall::ATP_RollingBall()
 	Ball->SetNotifyRigidBodyCollision(true);
 	RootComponent = Ball;
 
+	BallAimingComponent = CreateDefaultSubobject<UBallAimingComponent>(FName("Aiming Component"));
+
 	// Set up forces
 	RollTorque = 4000000.0f;
 	JumpImpulse = 70000.0f;
@@ -74,6 +76,11 @@ void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor*
 
 void ATP_RollingBall::AimAt(FVector HitLocation) 
 {
+	BallAimingComponent->AimAt(HitLocation);
 	auto OurBallName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurBallName, *HitLocation.ToString());
+}
+
+void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet) 
+{
+	BallAimingComponent->SetBallReference(BallToSet);
 }
