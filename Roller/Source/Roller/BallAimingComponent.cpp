@@ -36,7 +36,29 @@ void UBallAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 
 void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed) 
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), FireSpeed);
+	if (!Ball) { return; }
+
+	FVector FireVelocity;
+	FVector StartLocation = Ball->GetComponentLocation();
+
+	if (UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		FireVelocity,
+		StartLocation,
+		HitLocation,
+		FireSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	)) 
+	{
+		auto AimDirection = FireVelocity.GetSafeNormal();
+		auto BallName = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *BallName, *AimDirection.ToString());
+	}
+
+
 }
 
 void UBallAimingComponent::SetBallReference(UStaticMeshComponent* BallToSet) 
