@@ -15,25 +15,6 @@ UBallAimingComponent::UBallAimingComponent()
 	// ...
 }
 
-
-// Called when the game starts
-void UBallAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UBallAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
-}
-
 void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed) 
 {
 	if (!Ball) { return; }
@@ -41,7 +22,7 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	FVector FireVelocity;
 	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile"));
 
-	if (UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimDirection = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		FireVelocity,
 		StartLocation,
@@ -51,13 +32,13 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 		0,
 		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
-	)) 
-	{
-		auto AimDirection = FireVelocity.GetSafeNormal();
-		auto BallName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *BallName, *AimDirection.ToString());
-	}
+	);
 
+	if (bHaveAimDirection) {
+		auto AimDirection = FireVelocity.GetSafeNormal();
+		auto Rotation = AimDirection.Rotation();
+		Ball->SetRelativeRotation(FRotator(0.f, Rotation.Yaw, 0.f));
+	}
 
 }
 

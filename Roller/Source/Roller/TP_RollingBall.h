@@ -67,7 +67,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float FireSpeed = 10000;
+	float FireSpeed = 4000;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	UClass* ProjectileBlueprint;

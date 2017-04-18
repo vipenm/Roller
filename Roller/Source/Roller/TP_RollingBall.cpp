@@ -92,9 +92,11 @@ void ATP_RollingBall::Fire()
 {
 	if (!Ball) { return; }
 
-	GetWorld()->SpawnActor<AProjectile>(
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint,
 		Ball->GetSocketLocation(FName("Projectile")),
 		Ball->GetSocketRotation(FName("Projectile"))
 		);
+
+	Projectile->LaunchProjectile(FireSpeed);
 }

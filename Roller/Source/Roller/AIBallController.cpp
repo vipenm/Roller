@@ -30,6 +30,7 @@ void AAIBallController::Tick(float DeltaTime)
 
 	if (GetPlayerBall()) {
 		GetControlledBall()->AimAt(GetPlayerBall()->GetActorLocation());
+		GetControlledBall()->Fire();
 	}
 }
 
