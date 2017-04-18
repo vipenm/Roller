@@ -5,6 +5,7 @@
 #include "TP_RollingBall.generated.h"
 
 class UBallAimingComponent;
+class AProjectile;
 
 UCLASS(config=Game)
 class ATP_RollingBall : public APawn
@@ -59,8 +60,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category= Setup)
 	void SetBallReference(UStaticMeshComponent* BallToSet);
+	
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Fire();
+
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float FireSpeed = 10000;
+	float FireSpeed = 10000;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	UClass* ProjectileBlueprint;
+
 };

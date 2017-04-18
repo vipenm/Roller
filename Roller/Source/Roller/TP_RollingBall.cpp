@@ -4,6 +4,7 @@
 #include "TP_RollingBall.h"
 
 #include "BallAimingComponent.h"
+#include "Projectile.h"
 
 #define OUT
 
@@ -84,4 +85,16 @@ void ATP_RollingBall::AimAt(FVector HitLocation)
 void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet) 
 {
 	BallAimingComponent->SetBallReference(BallToSet);
+	Ball = BallToSet;
+}
+
+void ATP_RollingBall::Fire() 
+{
+	if (!Ball) { return; }
+
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBlueprint,
+		Ball->GetSocketLocation(FName("Projectile")),
+		Ball->GetSocketRotation(FName("Projectile"))
+		);
 }

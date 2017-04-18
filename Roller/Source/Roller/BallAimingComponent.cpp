@@ -39,7 +39,7 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	if (!Ball) { return; }
 
 	FVector FireVelocity;
-	FVector StartLocation = Ball->GetComponentLocation();
+	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile"));
 
 	if (UGameplayStatics::SuggestProjectileVelocity(
 		this,
@@ -65,4 +65,3 @@ void UBallAimingComponent::SetBallReference(UStaticMeshComponent* BallToSet)
 {
 	Ball = BallToSet;
 }
-

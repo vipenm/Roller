@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "BallAimingComponent.generated.h"
 
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ROLLER_API UBallAimingComponent : public UActorComponent
