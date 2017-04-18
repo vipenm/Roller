@@ -3,6 +3,8 @@
 #include "Roller.h"
 #include "TP_RollingBall.h"
 
+#include "BallAimingComponent.h"
+
 #define OUT
 
 ATP_RollingBall::ATP_RollingBall()

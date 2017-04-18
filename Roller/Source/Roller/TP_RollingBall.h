@@ -1,10 +1,10 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once
 
-#include "BallAimingComponent.h"
-
 #include "GameFramework/Pawn.h"
 #include "TP_RollingBall.generated.h"
+
+class UBallAimingComponent;
 
 UCLASS(config=Game)
 class ATP_RollingBall : public APawn

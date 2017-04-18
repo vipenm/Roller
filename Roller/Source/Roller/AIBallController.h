@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "TP_RollingBall.h"
-
 #include "AIController.h"
 #include "AIBallController.generated.h"
+
+class ATP_RollingBall;
 
 /**
  * 

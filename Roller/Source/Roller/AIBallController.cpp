@@ -4,6 +4,9 @@
 #include "Roller.h"
 #include "AIBallController.h"
 
+#include "TP_RollingBall.h"
+
+
 void AAIBallController::BeginPlay()
 {
 	Super::BeginPlay();
