@@ -37,7 +37,7 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	if (bHaveAimDirection) {
 		auto AimDirection = FireVelocity.GetSafeNormal();
 		auto Rotation = AimDirection.Rotation();
-		Ball->SetRelativeRotation(FRotator(0.f, Rotation.Yaw, 0.f));
+		Ball->SetRelativeRotation(FRotator(Rotation.Pitch, Rotation.Yaw, 0.f));
 	}
 
 }

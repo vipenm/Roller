@@ -67,7 +67,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float FireSpeed = 2000;
+	float FireSpeed = 2500.0f;
 
 	float ReloadTime = 3.0f;
 
