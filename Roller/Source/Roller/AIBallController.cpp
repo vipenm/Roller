@@ -30,7 +30,14 @@ void AAIBallController::Tick(float DeltaTime)
 
 	if (GetPlayerBall()) {
 		GetControlledBall()->AimAt(GetPlayerBall()->GetActorLocation());
-		GetControlledBall()->Fire();
+		//GetControlledBall()->Fire();
+
+		auto PlayerBallLocation = GetPlayerBall()->GetActorLocation();
+		auto ControlledBallLocation = GetControlledBall()->GetActorLocation();
+
+		auto Distance = FMath::Sqrt(FMath::Pow((PlayerBallLocation.X - ControlledBallLocation.X), 2) +
+			FMath::Pow((PlayerBallLocation.Y - ControlledBallLocation.Y), 2) +
+			FMath::Pow((PlayerBallLocation.Z - ControlledBallLocation.Z), 2));		UE_LOG(LogTemp, Warning, TEXT("Distance: %f"), Distance);
 	}
 }
 
