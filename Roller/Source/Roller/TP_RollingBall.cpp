@@ -10,7 +10,7 @@
 
 ATP_RollingBall::ATP_RollingBall()
 {
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("/Game/Rolling/Meshes/BallMesh.BallMesh"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("StaticMesh'/Game/Materials/BallMesh2.BallMesh2'"));
 
 	// Create mesh component for the ball
 	Ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ball0"));
