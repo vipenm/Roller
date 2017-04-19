@@ -20,8 +20,13 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	// Get approximate distance between AI and player in metres
+	void GetDistance();
+
+	// Get AI possessed ball
 	ATP_RollingBall* GetControlledBall() const;
 
+	// Get player possessed ball
 	ATP_RollingBall* GetPlayerBall() const;
 
 };

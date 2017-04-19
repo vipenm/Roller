@@ -32,12 +32,7 @@ void AAIBallController::Tick(float DeltaTime)
 		GetControlledBall()->AimAt(GetPlayerBall()->GetActorLocation());
 		//GetControlledBall()->Fire();
 
-		auto PlayerBallLocation = GetPlayerBall()->GetActorLocation();
-		auto ControlledBallLocation = GetControlledBall()->GetActorLocation();
-
-		auto Distance = FMath::Sqrt(FMath::Pow((PlayerBallLocation.X - ControlledBallLocation.X), 2) +
-			FMath::Pow((PlayerBallLocation.Y - ControlledBallLocation.Y), 2) +
-			FMath::Pow((PlayerBallLocation.Z - ControlledBallLocation.Z), 2));		UE_LOG(LogTemp, Warning, TEXT("Distance: %f"), Distance);
+		GetDistance();
 	}
 }
 
@@ -53,4 +48,14 @@ ATP_RollingBall* AAIBallController::GetPlayerBall() const
 	if (!PlayerPawn) { return nullptr; }
 
 	return Cast<ATP_RollingBall>(PlayerPawn);
+}
+
+void AAIBallController::GetDistance()
+{
+	auto PlayerBallLocation = GetPlayerBall()->GetActorLocation();
+	auto ControlledBallLocation = GetControlledBall()->GetActorLocation();
+
+	int Distance = FMath::Sqrt(FMath::Pow((PlayerBallLocation.X - ControlledBallLocation.X), 2) +
+		FMath::Pow((PlayerBallLocation.Y - ControlledBallLocation.Y), 2) +
+		FMath::Pow((PlayerBallLocation.Z - ControlledBallLocation.Z), 2)) / 100;	UE_LOG(LogTemp, Warning, TEXT("%s is %i metres away"), *GetControlledBall()->GetName(), Distance);
 }
