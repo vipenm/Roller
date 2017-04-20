@@ -20,10 +20,16 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	/// Get ball controlled by AI
 	ATP_RollingBall* GetControlledBall() const;
 
+	/// Get ball controlled by player
 	ATP_RollingBall* GetPlayerBall() const;
 
-	// Use Pythagoras' Theorem to get distance between AI and Player
-	int32 GetDistanceBetweenAIAndPlayer();
+	/// Use Pythagoras' Theorem to get distance between AI and Player
+	float GetDistanceBetweenAIAndPlayer();
+
+	/// Declare max distance in metres between player and AI that the AI can start firing
+	UPROPERTY(EditAnywhere)
+	float MaxFiringDistance = 16;
 };

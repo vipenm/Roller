@@ -22,31 +22,32 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
-	// Grab object in reach
+	/// Grab object in reach
 	void Grabbed();
 
-	// Release grabbed object
+	/// Release grabbed object
 	void Released();
 
-	// Find and setup physics handle
+	/// Find and setup physics handle
 	void SetupPhysicsHandle();
 
-	// Find and setup input component
+	/// Find and setup input component
 	void SetupInputComponent();
 
-	// Get the reach of the player
+	/// Get the reach of the player
 	FVector GetReachEnd();
 
-	// Get reach start location
+	/// Get reach start location
 	FVector GetReachStart();
 
-	// Find the first object in reach
+	/// Find the first object in reach
 	FHitResult GetObjectInReach();
 
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 
 	UInputComponent* InputComponent = nullptr;
 
+	/// Define sensible value for the reach of the player
 	float Reach = 400.0f;
 	
 };

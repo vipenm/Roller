@@ -90,18 +90,16 @@ void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet)
 
 void ATP_RollingBall::Fire() 
 {
-	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime;
+	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime; // Check if player can fire again
 
-	if (Ball && bIsReloaded) {
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+	if (Ball && bIsReloaded) { // If player can fire again
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>( // Spawn projectile
 			ProjectileBlueprint,
-			Ball->GetSocketLocation(FName("Projectile")),
+			Ball->GetSocketLocation(FName("Projectile")), // From 'projectile' socket
 			Ball->GetSocketRotation(FName("Projectile"))
 			);
 
-		Projectile->LaunchProjectile(FireSpeed);
-		LastFireTime = GetWorld()->GetTimeSeconds();
-	}
-
-	
+		Projectile->LaunchProjectile(FireSpeed); // Fire
+		LastFireTime = GetWorld()->GetTimeSeconds(); // Reset LastFireTime
+	}	
 }

@@ -14,7 +14,6 @@ UTeleport::UTeleport()
 
 }
 
-
 // Called when the game starts
 void UTeleport::BeginPlay()
 {
@@ -22,8 +21,10 @@ void UTeleport::BeginPlay()
 
 	Owner = GetOwner();
 
+	// Get location of player
 	Location = Owner->GetActorLocation();
 
+	// Define player as triggering actor for the trigger volume
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if (TriggeringActor == nullptr) {
@@ -35,17 +36,15 @@ void UTeleport::BeginPlay()
 	
 }
 
-
 // Called every frame
-void UTeleport::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+void UTeleport::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (!Trigger) { return; }
 
-	if (Trigger->IsOverlappingActor(TriggeringActor)) {
+	if (Trigger->IsOverlappingActor(TriggeringActor)) { // Check if the player is overlapping the trigger volume
 		Location.Z += 75.f;
-		TriggeringActor->SetActorLocation(Location);
+		TriggeringActor->SetActorLocation(Location); // Teleport player
 	}
 }
-

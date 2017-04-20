@@ -16,8 +16,10 @@ public:
 	// Sets default values for this component's properties
 	UBallAimingComponent();
 
+	/// Set reference to the ball
 	void SetBallReference(UStaticMeshComponent* BallToSet);
 
+	/// Tell the aiming component where to aim
 	void AimAt(FVector HitLocation, float FireSpeed);
 
 private:

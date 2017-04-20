@@ -21,26 +21,26 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	/** Vertical impulse to apply when pressing jump */
+	/// Vertical impulse to apply when pressing jump
 	UPROPERTY(EditAnywhere, Category=Ball)
 	float JumpImpulse;
 
-	/** Torque to apply when trying to roll ball */
+	/// Torque to apply when trying to roll ball
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Ball)
 	float RollTorque;
 
-	/** Indicates whether we can currently jump, use to prevent double jumping */
+	/// Indicates whether we can currently jump, use to prevent double jumping
 	bool bCanJump;
 
 protected:
 
-	/** Called for side to side input */
+	/// Called for side to side input
 	void MoveRight(float Val);
 
-	/** Called to move ball forwards and backwards */
+	/// Called to move ball forwards and backwards
 	void MoveForward(float Val);
 
-	/** Handle jump action. */
+	/// Handle jump action
 	void Jump();
 
 	// AActor interface
@@ -53,7 +53,7 @@ protected:
 
 
 public:
-	/** Returns Ball subobject **/
+	/// Returns Ball subobject
 	FORCEINLINE class UStaticMeshComponent* GetBall() const { return Ball; }
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -61,16 +61,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category= Setup)
 	void SetBallReference(UStaticMeshComponent* BallToSet);
 	
+	/// Blueprint callable function to initiate fire call
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
 
 
 private:
+
+	/// Speed in which to fire
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float FireSpeed = 2500.0f;
 
+	/// Set sensible default so player cannot continuoulsy shoot
 	float ReloadTime = 3.0f;
 
+	/// Set default of when player last fired
 	float LastFireTime = 0.f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)

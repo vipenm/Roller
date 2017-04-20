@@ -21,5 +21,6 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	/// Get the ball controlled by the player
 	ATP_RollingBall* GetControlledBall() const;
 };

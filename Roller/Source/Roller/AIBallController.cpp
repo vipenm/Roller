@@ -6,7 +6,6 @@
 
 #include "TP_RollingBall.h"
 
-
 void AAIBallController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -30,7 +29,11 @@ void AAIBallController::Tick(float DeltaTime)
 
 	if (GetPlayerBall()) {
 		GetControlledBall()->AimAt(GetPlayerBall()->GetActorLocation());
-		GetControlledBall()->Fire();
+
+		// Fire when player is in range
+		if (GetDistanceBetweenAIAndPlayer() <= MaxFiringDistance) {
+			GetControlledBall()->Fire();
+		}
 	}
 }
 
@@ -48,12 +51,13 @@ ATP_RollingBall* AAIBallController::GetPlayerBall() const
 	return Cast<ATP_RollingBall>(PlayerPawn);
 }
 
-int32 AAIBallController::GetDistanceBetweenAIAndPlayer()
+float AAIBallController::GetDistanceBetweenAIAndPlayer()
 {
 	auto PlayerBallLocation = GetPlayerBall()->GetActorLocation();
 	auto ControlledBallLocation = GetControlledBall()->GetActorLocation();
 
-	int32 Distance = FMath::Sqrt(FMath::Pow((PlayerBallLocation.X - ControlledBallLocation.X), 2) +
+	// Get the distance between AI and player in metres
+	float Distance = FMath::Sqrt(FMath::Pow((PlayerBallLocation.X - ControlledBallLocation.X), 2) +
 		FMath::Pow((PlayerBallLocation.Y - ControlledBallLocation.Y), 2) +
 		FMath::Pow((PlayerBallLocation.Z - ControlledBallLocation.Z), 2)) / 100;
 	return Distance;

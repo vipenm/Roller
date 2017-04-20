@@ -10,9 +10,8 @@ UBallAimingComponent::UBallAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
-	// ...
 }
 
 void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed) 
@@ -20,7 +19,7 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	if (!Ball) { return; }
 
 	FVector FireVelocity;
-	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile"));
+	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile")); /// Start aiming from the 'projectile' socket on the ball
 
 	bool bHaveAimDirection = UGameplayStatics::SuggestProjectileVelocity(
 		this,
@@ -35,9 +34,9 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	);
 
 	if (bHaveAimDirection) {
-		auto AimDirection = FireVelocity.GetSafeNormal();
-		auto Rotation = AimDirection.Rotation();
-		Ball->SetRelativeRotation(FRotator(Rotation.Pitch, Rotation.Yaw, 0.f));
+		auto AimDirection = FireVelocity.GetSafeNormal(); /// Get aim direction in unit vectors
+		auto Rotation = AimDirection.Rotation(); // Convert to rotation
+		Ball->SetRelativeRotation(FRotator(Rotation.Pitch, Rotation.Yaw, 0.f)); /// Rotate ball to match the aim direction
 	}
 
 }

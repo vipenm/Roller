@@ -25,10 +25,11 @@ private:
 
 	AActor* Owner = nullptr;
 
+	/// Location of player
 	FVector Location;
 
 	UPROPERTY(EditAnywhere)
-		ATriggerVolume* Trigger = nullptr;
+	ATriggerVolume* Trigger = nullptr;
 
 	AActor* TriggeringActor = nullptr;
 		

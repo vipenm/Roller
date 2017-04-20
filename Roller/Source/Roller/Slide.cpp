@@ -24,19 +24,32 @@ void USlide::BeginPlay()
 
 	if (!Owner) { return; }
 
-	Location = Owner->GetActorLocation();
+	Location = Owner->GetActorLocation(); /// Get default location of platform
 
-	SetInitialPlatformLocation();
-	SlidePlatform();
+	SetInitialPlatformLocation(); // Offset platform location
+	SlidePlatform(); // Call the sliding animation
 
+	/// Define the player as the triggering actor
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
-	
 
 	if (TriggeringActor == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
 	}
 	if (Trigger == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
+	}
+}
+
+// Called every frame
+void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (!Trigger) { return; }
+
+	/// If Actor is on Trigger Volume, move platform to default location
+	if (Trigger->IsOverlappingActor(TriggeringActor)) {
+		ResetPosition();
 	}
 }
 
@@ -58,29 +71,6 @@ void USlide::ResetPosition()
 
 void USlide::SlidePlatform()
 {
+	/// Broadcast to editor that this function is called and start sliding animation
 	OnSlide.Broadcast();
-}
-
-// Called every frame
-void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	if (!Trigger) { return; }
-
-	/// If Actor is on Trigger Volume, move platform
-	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-
-		ResetPosition();
-
-		if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
-			LastTimeSlide = GetWorld()->GetTimeSeconds();
-		}
-	}
-
-	if (Trigger->GetName().Contains(TEXT("TriggerVolume3"), ESearchCase::IgnoreCase, ESearchDir::FromStart)) {
-		if (GetWorld()->GetTimeSeconds() - LastTimeSlide > ResetDelay) { // TODO change delay so time limit to cross bridge
-			SetInitialPlatformLocation();
-		}
-	}
 }

@@ -31,13 +31,13 @@ void UInteractor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-
-
+	// Check if anything grabbable in reach
 	if (PhysicsHandle->GrabbedComponent) {
-		PhysicsHandle->SetTargetLocation(GetReachEnd());
+		PhysicsHandle->SetTargetLocation(GetReachEnd()); // If so, attach to end of reach of player
 	}
 }
 
+/// Get the starting point of the reach ie the origin of the player
 FVector UInteractor::GetReachStart() 
 {
 	FVector PlayerViewPointLocation;
@@ -53,6 +53,7 @@ FVector UInteractor::GetReachStart()
 
 }
 
+/// Get the end point of the reach
 FVector UInteractor::GetReachEnd() 
 {
 	FVector PlayerViewPointLocation;
@@ -66,7 +67,7 @@ FVector UInteractor::GetReachEnd()
 
 	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
 
-	return LineTraceEnd; // return reach
+	return LineTraceEnd; // return end of reach
 }
 
 void UInteractor::SetupPhysicsHandle()
@@ -91,13 +92,14 @@ void UInteractor::SetupInputComponent()
 	}
 }
 
+
 void UInteractor::Grabbed() 
 {
 	auto HitResult = GetObjectInReach();
 	auto ComponentToGrab = HitResult.GetComponent();
 	auto ActorHit = HitResult.GetActor();
 
-	if (ActorHit) {
+	if (ActorHit) { // If a suitable object is grabbed 
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab,
 			NAME_None,
@@ -118,13 +120,14 @@ FHitResult UInteractor::GetObjectInReach()
 	FHitResult LineTraceHit;
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
+	/// Ray-cast to get data of object hit depending on player view point and reach
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT LineTraceHit,
 		GetReachStart(),
 		GetReachEnd(),
-		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), // Check if object hit has PhysicsBody attribute
 		TraceParameters
 	);
 
-	return LineTraceHit;
+	return LineTraceHit; // return data of object hit
 }
