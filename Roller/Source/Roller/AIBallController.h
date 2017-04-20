@@ -25,5 +25,5 @@ public:
 	ATP_RollingBall* GetPlayerBall() const;
 
 	// Use Pythagoras' Theorem to get distance between AI and Player
-	void GetDistanceBetweenAIAndPlayer();
+	int32 GetDistanceBetweenAIAndPlayer();
 };
