@@ -60,14 +60,6 @@ ATP_RollingBall* UDeath::GetPlayerBall() const
 	return Cast<ATP_RollingBall>(PlayerPawn);
 }
 
-/*URespawn* UDeath::GetRespawn() const
-{
-	auto Spawn = GetOwner()->GetRootComponent()->GetAttachParent->GetOwner();
-	if (!Spawn) { return; }
-
-	return Cast<URespawn>(Spawn);
-}*/
-
 void UDeath::PlayerDeath()
 {
 	if (Ball == nullptr) { return; }

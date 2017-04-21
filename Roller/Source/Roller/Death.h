@@ -31,8 +31,6 @@ public:
 
 	ATP_RollingBall* GetPlayerBall() const;
 
-	URespawn* GetRespawn() const;
-
 	ATP_RollingBall* Ball = nullptr;
 
 	URespawn* Spawn = nullptr;
