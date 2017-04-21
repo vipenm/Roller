@@ -32,7 +32,9 @@ void AAIBallController::Tick(float DeltaTime)
 
 		// Fire when player is in range
 		if (GetDistanceBetweenAIAndPlayer() <= MaxFiringDistance) {
-			GetControlledBall()->Fire();
+			if (bCanFire) {
+				GetControlledBall()->Fire();
+			}	
 		}
 	}
 }

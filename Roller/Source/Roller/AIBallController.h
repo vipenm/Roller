@@ -32,4 +32,8 @@ public:
 	/// Declare max distance in metres between player and AI that the AI can start firing
 	UPROPERTY(EditAnywhere)
 	float MaxFiringDistance = 16;
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	bool bCanFire = true;
 };
