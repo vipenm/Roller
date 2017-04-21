@@ -103,12 +103,12 @@ void ATP_RollingBall::Fire()
 	}	
 }
 
-float ATP_RollingBall::GetPlayerLives()
+int32 ATP_RollingBall::GetPlayerLives()
 {
 	return PlayerLives;
 }
 
-void ATP_RollingBall::SetPlayerLives(float Lives)
+void ATP_RollingBall::SetPlayerLives(int32 Lives)
 {
 	PlayerLives = Lives;
 }

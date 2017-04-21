@@ -34,9 +34,11 @@ public:
 	/// Indicates whether we can currently jump, use to prevent double jumping
 	bool bCanJump;
 
-	float GetPlayerLives();
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	int32 GetPlayerLives();
 
-	void SetPlayerLives(float Lives);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetPlayerLives(int32 Lives);
 
 protected:
 
@@ -83,6 +85,7 @@ private:
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
 
-	float PlayerLives = 3.f;
+	UPROPERTY(VisibleAnywhere, Category = "Lives")
+	int32 PlayerLives = 0;
 
 };

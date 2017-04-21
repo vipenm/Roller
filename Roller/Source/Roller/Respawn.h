@@ -3,18 +3,17 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
-#include "Death.generated.h"
+#include "Respawn.generated.h"
 
-class ATP_RollingBall;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ROLLER_API UDeath : public UActorComponent
+class ROLLER_API URespawn : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UDeath();
+	URespawn();
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,15 +24,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* Trigger = nullptr;
 
-	/// Actor that can trigger the trigger volume
-	AActor* TriggeringActor = nullptr;
+	FVector GetSpawnLocation();
 
-	ATP_RollingBall* GetPlayerBall() const;
-
-	ATP_RollingBall* Ball = nullptr;
+	void SetSpawnLocation(FVector NewLocation);
 
 private:
 
-	void PlayerDeath();
+	/// Actor that can trigger the trigger volume
+	AActor* TriggeringActor = nullptr;
+
+	FVector SpawnLocation;
 	
 };
