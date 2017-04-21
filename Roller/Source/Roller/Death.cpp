@@ -14,6 +14,11 @@ UDeath::UDeath()
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
+	static ConstructorHelpers::FObjectFinder<UBlueprint>RollingBall(TEXT("Blueprint'/Game/Blueprints/MyRollingBall.MyRollingBall'"));
+	if (RollingBall.Object) {
+		MyRollingBall = (UClass*)RollingBall.Object->GeneratedClass;
+	}
+
 }
 
 // Called when the game starts
@@ -72,7 +77,7 @@ void UDeath::PlayerDeath()
 	else {
 		Ball->SetPlayerLives(Lives--);
 		Ball->Destroy();
-		ATP_RollingBall* NewBall = GetWorld()->SpawnActor<ATP_RollingBall>(Spawn->GetSpawnLocation(), FRotator(0));
+		ATP_RollingBall* NewBall = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Spawn->GetSpawnLocation(), FRotator(0));
 	}
 	
 	UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);

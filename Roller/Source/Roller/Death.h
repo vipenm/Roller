@@ -17,6 +17,8 @@ public:
 	// Sets default values for this component's properties
 	UDeath();
 
+	TSubclassOf<class APawn> MyRollingBall;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	

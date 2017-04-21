@@ -3,9 +3,17 @@
 #include "Roller.h"
 #include "TP_RollingGameMode.h"
 #include "TP_RollingBall.h"
+#include "BallPlayerController.h"
 
 ATP_RollingGameMode::ATP_RollingGameMode()
 {
-	// set default pawn class to our ball
-	DefaultPawnClass = ATP_RollingBall::StaticClass();
+	static ConstructorHelpers::FObjectFinder<UBlueprint>RollingBall(TEXT("Blueprint'/Game/Blueprints/MyRollingBall.MyRollingBall'"));
+	if (RollingBall.Object) {
+		DefaultPawnClass = (UClass*)RollingBall.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint>BallController(TEXT("Blueprint'/Game/Blueprints/BallPlayerContoller_BP.BallPlayerContoller_BP'"));
+	if (BallController.Object) {
+		PlayerControllerClass = (UClass*)BallController.Object->GeneratedClass;
+	}
 }
