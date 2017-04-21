@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "TP_RollingBall.h"
-
 #include "GameFramework/PlayerController.h"
 #include "BallPlayerController.generated.h"
 
+class ATP_RollingBall;
 /**
  * 
  */

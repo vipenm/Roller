@@ -3,6 +3,8 @@
 #include "Roller.h"
 #include "BallPlayerController.h"
 
+#include "TP_RollingBall.h"
+
 void ABallPlayerController::BeginPlay() 
 {
 	Super::BeginPlay();

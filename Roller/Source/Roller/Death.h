@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "Death.generated.h"
 
+class ATP_RollingBall;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ROLLER_API UDeath : public UActorComponent
@@ -27,6 +28,10 @@ public:
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
 
-	AActor* Owner;
+	ATP_RollingBall* Ball = nullptr;
+
+private:
+
+	void PlayerDeath();
 	
 };

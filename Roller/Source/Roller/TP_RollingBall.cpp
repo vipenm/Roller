@@ -102,3 +102,13 @@ void ATP_RollingBall::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds(); // Reset LastFireTime
 	}	
 }
+
+float ATP_RollingBall::GetPlayerLives()
+{
+	return PlayerLives;
+}
+
+void ATP_RollingBall::SetPlayerLives(float Lives)
+{
+	PlayerLives = Lives;
+}

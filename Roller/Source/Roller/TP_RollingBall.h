@@ -34,6 +34,10 @@ public:
 	/// Indicates whether we can currently jump, use to prevent double jumping
 	bool bCanJump;
 
+	float GetPlayerLives();
+
+	void SetPlayerLives(float Lives);
+
 protected:
 
 	/// Called for side to side input
@@ -70,12 +74,15 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float FireSpeed = 2500.0f;
 
+	UPROPERTY(EditAnywhere, Category = Setup)
+	UClass* ProjectileBlueprint;
+
 	/// Set sensible default so player cannot continuously shoot
 	float ReloadTime = 3.0f;
 
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
-	UClass* ProjectileBlueprint;
+	float PlayerLives = 3.f;
+
 };

@@ -3,6 +3,7 @@
 #include "Roller.h"
 #include "Death.h"
 
+#include "TP_RollingBall.h"
 
 // Sets default values for this component's properties
 UDeath::UDeath()
@@ -12,7 +13,6 @@ UDeath::UDeath()
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -37,9 +37,23 @@ void UDeath::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponen
 
 	if (!Trigger) { return; }
 
-	/// If Actor is on Trigger Volume, move platform to default location
+	// If Actor is on Trigger Volume,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-		UGameplayStatics::OpenLevel(this, FName("GameOver"));
+		PlayerDeath(); // Open Game Over Screen
 	}
+}
+
+void UDeath::PlayerDeath()
+{
+	//if (Ball == nullptr) { return; }
+	//auto Lives = Ball->GetPlayerLives();
+	//if (Lives == 0) {
+		UGameplayStatics::OpenLevel(this, FName("GameOver"));
+	//}
+	//else {
+		//Ball->SetPlayerLives(Lives--);
+	//}
+	
+	//UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);
 }
 
