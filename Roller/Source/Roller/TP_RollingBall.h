@@ -19,6 +19,8 @@ class ATP_RollingBall : public APawn
 public:
 	ATP_RollingBall();
 
+	virtual void BeginPlay() override;
+
 	void AimAt(FVector HitLocation);
 
 	/// Vertical impulse to apply when pressing jump
@@ -51,12 +53,9 @@ protected:
 
 	UBallAimingComponent* BallAimingComponent = nullptr;
 
-
 public:
 	/// Returns Ball subobject
 	FORCEINLINE class UStaticMeshComponent* GetBall() const { return Ball; }
-
-	virtual void Tick(float DeltaSeconds) override;
 
 	UFUNCTION(BlueprintCallable, Category= Setup)
 	void SetBallReference(UStaticMeshComponent* BallToSet);
@@ -65,14 +64,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
 
-
 private:
 
 	/// Speed in which to fire
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float FireSpeed = 2500.0f;
 
-	/// Set sensible default so player cannot continuoulsy shoot
+	/// Set sensible default so player cannot continuously shoot
 	float ReloadTime = 3.0f;
 
 	/// Set default of when player last fired
@@ -80,5 +78,4 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	UClass* ProjectileBlueprint;
-
 };

@@ -32,10 +32,9 @@ ATP_RollingBall::ATP_RollingBall()
 	bCanJump = true; // Start being able to jump
 }
 
-// Called every frame
-void ATP_RollingBall::Tick(float DeltaTime)
+void ATP_RollingBall::BeginPlay()
 {
-	Super::Tick(DeltaTime);
+	Super::BeginPlay();
 }
 
 void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* InputComponent)
