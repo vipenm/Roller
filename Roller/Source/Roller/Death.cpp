@@ -45,15 +45,16 @@ void UDeath::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponen
 
 void UDeath::PlayerDeath()
 {
-	//if (Ball == nullptr) { return; }
-	//auto Lives = Ball->GetPlayerLives();
-	//if (Lives == 0) {
+	if (Ball == nullptr) { return; }
+	auto Lives = Ball->GetPlayerLives();
+	if (Lives == 0) {
 		UGameplayStatics::OpenLevel(this, FName("GameOver"));
-	//}
-	//else {
-		//Ball->SetPlayerLives(Lives--);
-	//}
+	}
+	else {
+		UGameplayStatics::OpenLevel(this, FName("Retry"));
+		Ball->SetPlayerLives(Lives--);
+	}
 	
-	//UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);
+	UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);
 }
 
