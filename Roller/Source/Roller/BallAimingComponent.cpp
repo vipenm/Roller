@@ -14,6 +14,7 @@ UBallAimingComponent::UBallAimingComponent()
 
 }
 
+// Track and lock onto target 
 void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed) 
 {
 	if (!Ball) { return; }

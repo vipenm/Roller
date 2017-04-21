@@ -48,6 +48,6 @@ private:
 	UInputComponent* InputComponent = nullptr;
 
 	/// Define sensible value for the reach of the player
-	float Reach = 400.0f;
+	float Reach = 500.0f;
 	
 };
