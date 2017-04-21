@@ -6,6 +6,7 @@
 #include "Death.generated.h"
 
 class ATP_RollingBall;
+class URespawn;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ROLLER_API UDeath : public UActorComponent
@@ -30,7 +31,11 @@ public:
 
 	ATP_RollingBall* GetPlayerBall() const;
 
+	URespawn* GetRespawn() const;
+
 	ATP_RollingBall* Ball = nullptr;
+
+	URespawn* Spawn = nullptr;
 
 private:
 

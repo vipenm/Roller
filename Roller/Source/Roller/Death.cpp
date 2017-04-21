@@ -4,6 +4,7 @@
 #include "Death.h"
 
 #include "TP_RollingBall.h"
+#include "Respawn.h"
 
 // Sets default values for this component's properties
 UDeath::UDeath()
@@ -22,13 +23,19 @@ void UDeath::BeginPlay()
 
 	Ball = GetPlayerBall();
 
+	Spawn = GetOwner()->FindComponentByClass<URespawn>();
+
+	//Spawn = GetRespawn();
+
 	/// Define the player as the triggering actor
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
+	if (Spawn == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Spawn is null"));
+	}
 	if (TriggeringActor == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
 	}
-
 }
 
 // Called every frame
@@ -53,17 +60,27 @@ ATP_RollingBall* UDeath::GetPlayerBall() const
 	return Cast<ATP_RollingBall>(PlayerPawn);
 }
 
+/*URespawn* UDeath::GetRespawn() const
+{
+	auto Spawn = GetOwner()->GetRootComponent()->GetAttachParent->GetOwner();
+	if (!Spawn) { return; }
+
+	return Cast<URespawn>(Spawn);
+}*/
+
 void UDeath::PlayerDeath()
 {
 	if (Ball == nullptr) { return; }
+	if (Spawn == nullptr) { return; }
 	
 	auto Lives = Ball->GetPlayerLives();
 	if (Lives == 0) {
 		UGameplayStatics::OpenLevel(this, FName("GameOver"));
 	}
 	else {
-
 		Ball->SetPlayerLives(Lives--);
+		Ball->Destroy();
+		ATP_RollingBall* NewBall = GetWorld()->SpawnActor<ATP_RollingBall>(Spawn->GetSpawnLocation(), FRotator(0));
 	}
 	
 	UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);

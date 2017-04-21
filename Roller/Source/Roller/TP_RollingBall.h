@@ -86,6 +86,6 @@ private:
 	float LastFireTime = 0.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Lives")
-	int32 PlayerLives = 0;
+	int32 PlayerLives = 3;
 
 };

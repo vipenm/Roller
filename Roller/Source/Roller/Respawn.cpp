@@ -45,7 +45,7 @@ void URespawn::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 
 FVector URespawn::GetSpawnLocation() 
 {
-	return SpawnLocation;
+	return SpawnLocation + FVector(0.f, 0.f, 70.f);
 }
 
 void URespawn::SetSpawnLocation(FVector NewLocation) {
