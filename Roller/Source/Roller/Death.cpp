@@ -5,6 +5,7 @@
 
 #include "TP_RollingBall.h"
 #include "Respawn.h"
+#include "BallPlayerController.h"
 
 // Sets default values for this component's properties
 UDeath::UDeath()
@@ -18,7 +19,6 @@ UDeath::UDeath()
 	if (RollingBall.Object) {
 		MyRollingBall = (UClass*)RollingBall.Object->GeneratedClass;
 	}
-
 }
 
 // Called when the game starts
@@ -26,33 +26,31 @@ void UDeath::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Ball = GetPlayerBall();
-
 	Spawn = GetOwner()->FindComponentByClass<URespawn>();
 
-	//Spawn = GetRespawn();
-
-	/// Define the player as the triggering actor
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+	Ball = GetPlayerBall();
 
 	if (Spawn == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Spawn is null"));
-	}
-	if (TriggeringActor == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
+		UE_LOG(LogTemp, Error, TEXT("Spawn location not found"));	
 	}
 }
 
 // Called every frame
-void UDeath::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+void UDeath::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (!Trigger) { return; }
 
+	SetTriggeringActor(GetWorld()->GetFirstPlayerController()->GetPawn());
+
+	TriggeringActor = GetTriggeringActor();
+
+	if (TriggeringActor == nullptr) { return; }
+
 	// If Actor is on Trigger Volume,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-		PlayerDeath(); // Open Game Over Screen
+		PlayerDeath(); // Destroy player
 	}
 }
 
@@ -68,18 +66,28 @@ ATP_RollingBall* UDeath::GetPlayerBall() const
 void UDeath::PlayerDeath()
 {
 	if (Ball == nullptr) { return; }
-	if (Spawn == nullptr) { return; }
-	
-	auto Lives = Ball->GetPlayerLives();
+
 	if (Lives == 0) {
 		UGameplayStatics::OpenLevel(this, FName("GameOver"));
 	}
 	else {
-		Ball->SetPlayerLives(Lives--);
+		APlayerController* Controller = GetWorld()->GetFirstPlayerController();
+		Controller->UnPossess();
+		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Spawn->GetSpawnLocation(), FRotator(0));
+		Controller->Possess(NewPlayer);
 		Ball->Destroy();
-		ATP_RollingBall* NewBall = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Spawn->GetSpawnLocation(), FRotator(0));
+		Ball = NewPlayer;
+		Lives--;
+		UE_LOG(LogTemp, Warning, TEXT("Lives left: %i"), Lives);
 	}
-	
-	UE_LOG(LogTemp, Warning, TEXT("Lives left: %f"), Lives);
 }
 
+void UDeath::SetTriggeringActor(APawn* TriggeringActor)
+{
+	Player = TriggeringActor;
+}
+
+APawn* UDeath::GetTriggeringActor() 
+{
+	return Player;
+}

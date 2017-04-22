@@ -5,8 +5,6 @@
 #include "Components/ActorComponent.h"
 #include "Slide.generated.h"
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSlide);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSlide);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

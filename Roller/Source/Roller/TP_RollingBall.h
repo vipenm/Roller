@@ -7,14 +7,14 @@
 class UBallAimingComponent;
 class AProjectile;
 
-UCLASS(config=Game)
+UCLASS(config = Game)
 class ATP_RollingBall : public APawn
 {
 	GENERATED_BODY()
 
-	/** StaticMesh used for the ball */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* Ball;
+		/** StaticMesh used for the ball */
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
+		class UStaticMeshComponent* Ball;
 
 public:
 	ATP_RollingBall();
@@ -24,21 +24,15 @@ public:
 	void AimAt(FVector HitLocation);
 
 	/// Vertical impulse to apply when pressing jump
-	UPROPERTY(EditAnywhere, Category=Ball)
-	float JumpImpulse;
+	UPROPERTY(EditAnywhere, Category = Ball)
+		float JumpImpulse;
 
 	/// Torque to apply when trying to roll ball
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Ball)
-	float RollTorque;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ball)
+		float RollTorque;
 
 	/// Indicates whether we can currently jump, use to prevent double jumping
 	bool bCanJump;
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	int32 GetPlayerLives();
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetPlayerLives(int32 Lives);
 
 protected:
 
@@ -63,9 +57,9 @@ public:
 	/// Returns Ball subobject
 	FORCEINLINE class UStaticMeshComponent* GetBall() const { return Ball; }
 
-	UFUNCTION(BlueprintCallable, Category= Setup)
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBallReference(UStaticMeshComponent* BallToSet);
-	
+
 	/// Blueprint callable function to initiate fire call
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
@@ -74,18 +68,15 @@ private:
 
 	/// Speed in which to fire
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float FireSpeed = 2500.0f;
+		float FireSpeed = 2500.0f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	UClass* ProjectileBlueprint;
+		UClass* ProjectileBlueprint;
 
 	/// Set sensible default so player cannot continuously shoot
 	float ReloadTime = 3.0f;
 
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
-
-	UPROPERTY(VisibleAnywhere, Category = "Lives")
-	int32 PlayerLives = 3;
 
 };

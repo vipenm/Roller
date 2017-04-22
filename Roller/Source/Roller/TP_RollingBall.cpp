@@ -50,7 +50,7 @@ void ATP_RollingBall::MoveRight(float Val)
 {
 	const FVector Torque = FVector(-1.f * Val * RollTorque, 0.f, 0.f);
 	Ball->AddTorque(Torque);
-	
+
 }
 
 void ATP_RollingBall::MoveForward(float Val)
@@ -61,7 +61,7 @@ void ATP_RollingBall::MoveForward(float Val)
 
 void ATP_RollingBall::Jump()
 {
-	if(bCanJump)
+	if (bCanJump)
 	{
 		const FVector Impulse = FVector(0.f, 0.f, JumpImpulse);
 		Ball->AddImpulse(Impulse);
@@ -76,18 +76,18 @@ void ATP_RollingBall::NotifyHit(class UPrimitiveComponent* MyComp, class AActor*
 	bCanJump = true;
 }
 
-void ATP_RollingBall::AimAt(FVector HitLocation) 
+void ATP_RollingBall::AimAt(FVector HitLocation)
 {
 	BallAimingComponent->AimAt(HitLocation, FireSpeed);
 }
 
-void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet) 
+void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet)
 {
 	BallAimingComponent->SetBallReference(BallToSet);
 	Ball = BallToSet;
 }
 
-void ATP_RollingBall::Fire() 
+void ATP_RollingBall::Fire()
 {
 	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime; // Check if player can fire again
 
@@ -100,15 +100,5 @@ void ATP_RollingBall::Fire()
 
 		Projectile->LaunchProjectile(FireSpeed); // Fire
 		LastFireTime = GetWorld()->GetTimeSeconds(); // Reset LastFireTime
-	}	
-}
-
-int32 ATP_RollingBall::GetPlayerLives()
-{
-	return PlayerLives;
-}
-
-void ATP_RollingBall::SetPlayerLives(int32 Lives)
-{
-	PlayerLives = Lives;
+	}
 }

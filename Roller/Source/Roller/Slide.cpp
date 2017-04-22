@@ -28,13 +28,7 @@ void USlide::BeginPlay()
 
 	SetInitialPlatformLocation(); // Offset platform location
 	SlidePlatform(); // Call the sliding animation
-
-	/// Define the player as the triggering actor
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	if (TriggeringActor == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Triggering actor not found"));
-	}
+	
 	if (Trigger == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
 	}
@@ -46,6 +40,10 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (!Trigger) { return; }
+
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if (!TriggeringActor) { return; }
 
 	/// If Actor is on Trigger Volume, move platform to default location
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {

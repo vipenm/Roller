@@ -5,21 +5,22 @@
 #include "Components/ActorComponent.h"
 #include "Respawn.generated.h"
 
+class UDeath;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROLLER_API URespawn : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	URespawn();
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* Trigger = nullptr;
@@ -34,5 +35,7 @@ private:
 	AActor* TriggeringActor = nullptr;
 
 	FVector SpawnLocation;
-	
+
+	UDeath* Death = nullptr;
+
 };

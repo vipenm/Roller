@@ -7,13 +7,14 @@
 
 class ATP_RollingBall;
 class URespawn;
+class ABallPlayerController;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROLLER_API UDeath : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UDeath();
 
@@ -21,9 +22,15 @@ public:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void SetTriggeringActor(APawn* Player);
+
+	APawn* GetTriggeringActor();
+
+	ATP_RollingBall* GetPlayerBall() const;
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* Trigger = nullptr;
@@ -31,14 +38,20 @@ public:
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
 
-	ATP_RollingBall* GetPlayerBall() const;
-
 	ATP_RollingBall* Ball = nullptr;
-
+	
 	URespawn* Spawn = nullptr;
+
+	int32 GetPlayerLives();
+
+	void SetPlayerLives(int32 PlayerLives);
 
 private:
 
 	void PlayerDeath();
-	
+
+	APawn* Player;
+
+	int32 Lives = 3;
+
 };
