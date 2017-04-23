@@ -24,6 +24,9 @@ void UTeleport::BeginPlay()
 	// Get location of player
 	Location = Owner->GetActorLocation();
 
+	// Define player as triggering actor for the trigger volume
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
 	if (Trigger == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
 	}
@@ -36,9 +39,6 @@ void UTeleport::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (!Trigger) { return; }
-
-	// Define player as triggering actor for the trigger volume
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if (!TriggeringActor) { return; }
 

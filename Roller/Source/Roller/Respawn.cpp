@@ -21,6 +21,10 @@ void URespawn::BeginPlay()
 {
 	Super::BeginPlay();
 
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn(); // Find the triggering actor
+
+	Ball = GetPlayerBall(); // Find the current player
+
 }
 
 // Called every frame
@@ -30,15 +34,12 @@ void URespawn::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	if (!Trigger) { return; }
 
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn(); // Find the triggering actor
-
-	Ball = GetPlayerBall(); // Find the current player
-
 	if (!Ball) { return; }
 
 	// If Actor is on checkpoint,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 		Ball->SetSpawnLocation(GetOwner()->GetActorLocation()); // Set the new spawn location
+		UE_LOG(LogTemp, Warning, TEXT("New Spawn Location: %s"), *Ball->GetSpawnLocation().ToString());
 	}
 }
 

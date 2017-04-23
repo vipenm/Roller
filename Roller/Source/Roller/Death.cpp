@@ -5,6 +5,7 @@
 
 #include "TP_RollingBall.h"
 #include "BallPlayerController.h"
+#include "Interactor.h"
 
 // Sets default values for this component's properties
 UDeath::UDeath()
@@ -13,12 +14,6 @@ UDeath::UDeath()
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// Create player object from blueprint
-	static ConstructorHelpers::FObjectFinder<UBlueprint>RollingBall(TEXT("Blueprint'/Game/Blueprints/MyRollingBall.MyRollingBall'"));
-	if (RollingBall.Object) {
-		MyRollingBall = (UClass*)RollingBall.Object->GeneratedClass;
-	}
 }
 
 // Called when the game starts
@@ -27,6 +22,10 @@ void UDeath::BeginPlay()
 	Super::BeginPlay();
 
 	Ball = GetPlayerBall(); // Get the current player
+
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	Comp = Ball->GetRootPrimitiveComponent();
 }
 
 // Called every frame
@@ -36,11 +35,7 @@ void UDeath::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 	if (!Trigger) { return; }
 
-	SetTriggeringActor(GetWorld()->GetFirstPlayerController()->GetPawn());
-
-	TriggeringActor = GetTriggeringActor();
-
-	if (TriggeringActor == nullptr) { return; }
+	if (!TriggeringActor) { return; }
 
 	// If Actor is on Trigger Volume,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
@@ -65,22 +60,9 @@ void UDeath::PlayerDeath()
 		UGameplayStatics::OpenLevel(this, FName("GameOver")); // If player has died too many times, open Game Over screen
 	}
 	else {
-		APlayerController* Controller = GetWorld()->GetFirstPlayerController(); // Create reference to the controller
-		Controller->UnPossess(); // Unposessess controller from dying player
-		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Ball->GetSpawnLocation(), FRotator(0)); // Spawn new player
-		Controller->Possess(NewPlayer); // Possess new player with the controller
-		Ball->Destroy(); // Destroy the old player
-		Ball = NewPlayer; // Set the reference of the player to the new player
+		Comp->SetPhysicsLinearVelocity(FVector(0));
+		Comp->SetPhysicsAngularVelocity(FVector(0));
+		Ball->SetActorLocation(Ball->GetSpawnLocation()); // Spawn player at checkpoint
 		Lives--; // Remove a life
 	}
-}
-
-void UDeath::SetTriggeringActor(APawn* TriggeringActor)
-{
-	Player = TriggeringActor;
-}
-
-APawn* UDeath::GetTriggeringActor() 
-{
-	return Player;
 }

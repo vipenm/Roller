@@ -26,6 +26,8 @@ void USlide::BeginPlay()
 
 	Location = Owner->GetActorLocation(); /// Get default location of platform
 
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+
 	SetInitialPlatformLocation(); // Offset platform location
 	SlidePlatform(); // Call the sliding animation
 	
@@ -40,8 +42,6 @@ void USlide::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (!Trigger) { return; }
-
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if (!TriggeringActor) { return; }
 
