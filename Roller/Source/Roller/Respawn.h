@@ -6,6 +6,7 @@
 #include "Respawn.generated.h"
 
 class UDeath;
+class ATP_RollingBall;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROLLER_API URespawn : public UActorComponent
@@ -25,16 +26,14 @@ public:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* Trigger = nullptr;
 
-	FVector GetSpawnLocation();
-
-	void SetSpawnLocation(FVector NewLocation);
+	ATP_RollingBall * GetPlayerBall() const;
+	
+	ATP_RollingBall* Ball = nullptr;
 
 private:
 
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
-
-	FVector SpawnLocation;
 
 	UDeath* Death = nullptr;
 

@@ -4,6 +4,7 @@
 #include "Respawn.h"
 
 #include "Death.h"
+#include "TP_RollingBall.h"
 
 
 // Sets default values for this component's properties
@@ -32,18 +33,21 @@ void URespawn::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
 
+	Ball = GetPlayerBall();
+
+	if (!Ball) { return; }
+
 	// If Actor is on Trigger Volume,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-		SetSpawnLocation(GetOwner()->GetActorLocation());
+		Ball->SetSpawnLocation(GetOwner()->GetActorLocation());
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("Spawn location: %s"), *GetSpawnLocation().ToString());
 }
 
-FVector URespawn::GetSpawnLocation()
+ATP_RollingBall* URespawn::GetPlayerBall() const
 {
-	return SpawnLocation + FVector(0.f, 0.f, 70.0f);
-}
+	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-void URespawn::SetSpawnLocation(FVector NewLocation) {
-	SpawnLocation = NewLocation;
+	if (!PlayerPawn) { return nullptr; }
+
+	return Cast<ATP_RollingBall>(PlayerPawn);
 }

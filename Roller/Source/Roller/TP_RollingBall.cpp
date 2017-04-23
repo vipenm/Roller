@@ -102,3 +102,13 @@ void ATP_RollingBall::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds(); // Reset LastFireTime
 	}
 }
+
+void ATP_RollingBall::SetSpawnLocation(FVector Location)
+{
+	SpawnLocation = Location;
+}
+
+FVector ATP_RollingBall::GetSpawnLocation()
+{
+	return SpawnLocation + FVector(0.f, 0.f, 70.0f);
+}

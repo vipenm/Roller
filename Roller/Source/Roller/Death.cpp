@@ -4,7 +4,6 @@
 #include "Death.h"
 
 #include "TP_RollingBall.h"
-#include "Respawn.h"
 #include "BallPlayerController.h"
 
 // Sets default values for this component's properties
@@ -26,13 +25,7 @@ void UDeath::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Spawn = GetOwner()->FindComponentByClass<URespawn>();
-
 	Ball = GetPlayerBall();
-
-	if (Spawn == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Spawn location not found"));	
-	}
 }
 
 // Called every frame
@@ -73,12 +66,11 @@ void UDeath::PlayerDeath()
 	else {
 		APlayerController* Controller = GetWorld()->GetFirstPlayerController();
 		Controller->UnPossess();
-		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Spawn->GetSpawnLocation(), FRotator(0));
+		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Ball->GetSpawnLocation(), FRotator(0));
 		Controller->Possess(NewPlayer);
 		Ball->Destroy();
 		Ball = NewPlayer;
 		Lives--;
-		UE_LOG(LogTemp, Warning, TEXT("Lives left: %i"), Lives);
 	}
 }
 

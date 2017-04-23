@@ -6,7 +6,6 @@
 #include "Death.generated.h"
 
 class ATP_RollingBall;
-class URespawn;
 class ABallPlayerController;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -38,13 +37,7 @@ public:
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
 
-	ATP_RollingBall* Ball = nullptr;
-	
-	URespawn* Spawn = nullptr;
-
-	int32 GetPlayerLives();
-
-	void SetPlayerLives(int32 PlayerLives);
+	ATP_RollingBall* Ball = nullptr;	
 
 private:
 

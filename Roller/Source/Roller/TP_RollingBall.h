@@ -64,6 +64,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
 
+	void SetSpawnLocation(FVector Location);
+
+	FVector GetSpawnLocation();
+
 private:
 
 	/// Speed in which to fire
@@ -78,5 +82,7 @@ private:
 
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
+
+	FVector SpawnLocation;
 
 };
