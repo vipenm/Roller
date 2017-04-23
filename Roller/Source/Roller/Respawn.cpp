@@ -3,7 +3,6 @@
 #include "Roller.h"
 #include "Respawn.h"
 
-#include "Death.h"
 #include "TP_RollingBall.h"
 
 
@@ -31,15 +30,15 @@ void URespawn::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	if (!Trigger) { return; }
 
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn(); // Find the triggering actor
 
-	Ball = GetPlayerBall();
+	Ball = GetPlayerBall(); // Find the current player
 
 	if (!Ball) { return; }
 
-	// If Actor is on Trigger Volume,
+	// If Actor is on checkpoint,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-		Ball->SetSpawnLocation(GetOwner()->GetActorLocation());
+		Ball->SetSpawnLocation(GetOwner()->GetActorLocation()); // Set the new spawn location
 	}
 }
 

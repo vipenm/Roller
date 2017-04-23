@@ -14,6 +14,7 @@ UDeath::UDeath()
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
+	// Create player object from blueprint
 	static ConstructorHelpers::FObjectFinder<UBlueprint>RollingBall(TEXT("Blueprint'/Game/Blueprints/MyRollingBall.MyRollingBall'"));
 	if (RollingBall.Object) {
 		MyRollingBall = (UClass*)RollingBall.Object->GeneratedClass;
@@ -25,7 +26,7 @@ void UDeath::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Ball = GetPlayerBall();
+	Ball = GetPlayerBall(); // Get the current player
 }
 
 // Called every frame
@@ -61,16 +62,16 @@ void UDeath::PlayerDeath()
 	if (Ball == nullptr) { return; }
 
 	if (Lives == 0) {
-		UGameplayStatics::OpenLevel(this, FName("GameOver"));
+		UGameplayStatics::OpenLevel(this, FName("GameOver")); // If player has died too many times, open Game Over screen
 	}
 	else {
-		APlayerController* Controller = GetWorld()->GetFirstPlayerController();
-		Controller->UnPossess();
-		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Ball->GetSpawnLocation(), FRotator(0));
-		Controller->Possess(NewPlayer);
-		Ball->Destroy();
-		Ball = NewPlayer;
-		Lives--;
+		APlayerController* Controller = GetWorld()->GetFirstPlayerController(); // Create reference to the controller
+		Controller->UnPossess(); // Unposessess controller from dying player
+		ATP_RollingBall* NewPlayer = GetWorld()->SpawnActor<ATP_RollingBall>(MyRollingBall, Ball->GetSpawnLocation(), FRotator(0)); // Spawn new player
+		Controller->Possess(NewPlayer); // Possess new player with the controller
+		Ball->Destroy(); // Destroy the old player
+		Ball = NewPlayer; // Set the reference of the player to the new player
+		Lives--; // Remove a life
 	}
 }
 

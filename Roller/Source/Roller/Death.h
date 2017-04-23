@@ -25,10 +25,13 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	/// Set the new triggering actor after death
 	void SetTriggeringActor(APawn* Player);
 
+	/// Get the new triggering actor
 	APawn* GetTriggeringActor();
 
+	/// Get the current player
 	ATP_RollingBall* GetPlayerBall() const;
 
 	UPROPERTY(EditAnywhere)
@@ -37,14 +40,18 @@ public:
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
 
+	/// Reference to the player
 	ATP_RollingBall* Ball = nullptr;	
 
 private:
 
+	/// Kill player
 	void PlayerDeath();
 
+	/// Reference to a new player to be created after death
 	APawn* Player;
 
+	/// Set lives of the player
 	int32 Lives = 3;
 
 };

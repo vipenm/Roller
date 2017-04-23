@@ -5,7 +5,6 @@
 #include "Components/ActorComponent.h"
 #include "Respawn.generated.h"
 
-class UDeath;
 class ATP_RollingBall;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -26,15 +25,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* Trigger = nullptr;
 
+	/// Get the current player 
 	ATP_RollingBall * GetPlayerBall() const;
 	
+	/// Reference to the player
 	ATP_RollingBall* Ball = nullptr;
 
 private:
 
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
-
-	UDeath* Death = nullptr;
 
 };

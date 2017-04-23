@@ -64,8 +64,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
 
+	/// Set the players new spawn location after reaching a checkpoint
 	void SetSpawnLocation(FVector Location);
 
+	/// Get the players new spawn location after death
 	FVector GetSpawnLocation();
 
 private:
@@ -83,6 +85,7 @@ private:
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
 
+	/// Location to spawn player after death
 	FVector SpawnLocation;
 
 };
