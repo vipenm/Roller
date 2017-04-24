@@ -5,6 +5,7 @@
 
 #include "BallAimingComponent.h"
 #include "Projectile.h"
+#include "RollerPlayerState.h"
 
 #define OUT
 
@@ -35,6 +36,12 @@ ATP_RollingBall::ATP_RollingBall()
 void ATP_RollingBall::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ARollerPlayerState* CurrentState = Cast<ARollerPlayerState>(this->PlayerState);
+	if (CurrentState)
+	{
+		CurrentState->SetPlayerScore(50);
+	}
 }
 
 void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* InputComponent)

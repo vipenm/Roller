@@ -12,9 +12,11 @@ class ATP_RollingBall : public APawn
 {
 	GENERATED_BODY()
 
-		/** StaticMesh used for the ball */
-		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
-		class UStaticMeshComponent* Ball;
+	/** StaticMesh used for the ball */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* Ball;
+
+	class ARollerPlayerState* CurrentState;
 
 public:
 	ATP_RollingBall();
