@@ -6,7 +6,7 @@
 #include "TP_RollingBall.h"
 
 
-// Sets default values for this component's properties
+/// Sets default values for this component's properties
 URespawn::URespawn()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -39,7 +39,6 @@ void URespawn::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// If Actor is on checkpoint,
 	if (Trigger->IsOverlappingActor(TriggeringActor)) {
 		Ball->SetSpawnLocation(GetOwner()->GetActorLocation()); // Set the new spawn location
-		UE_LOG(LogTemp, Warning, TEXT("New Spawn Location: %s"), *Ball->GetSpawnLocation().ToString());
 	}
 }
 

@@ -13,13 +13,25 @@ class ROLLER_API ARollerPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 	
-	int PlayerScore;
+	int32 PlayerLives;
 
 public:
 	ARollerPlayerState();
 
-	void SetPlayerScore(int Score);
+	void SetPlayerLives(int32 Lives);
 
-	int GetPlayerScore();
+	int32 GetPlayerLives();
+
+	// Check if player has reached checkpoint
+	bool bCheckpointReached = false;
+
+	// Get time player reached checkpoint
+	float LastCheckpointTime;
+
+	// Add delay so message on HUD disappears after 2 seconds
+	float CheckpointDelay = 2.0f;
+
+	// Check if item collected
+	bool bThrusterCollected = false;
 	
 };

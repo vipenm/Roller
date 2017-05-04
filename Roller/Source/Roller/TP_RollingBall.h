@@ -6,6 +6,7 @@
 
 class UBallAimingComponent;
 class AProjectile;
+class ARollerPlayerState;
 
 UCLASS(config = Game)
 class ATP_RollingBall : public APawn
@@ -16,8 +17,6 @@ class ATP_RollingBall : public APawn
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Ball, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* Ball;
 
-	class ARollerPlayerState* CurrentState;
-
 public:
 	ATP_RollingBall();
 
@@ -27,11 +26,11 @@ public:
 
 	/// Vertical impulse to apply when pressing jump
 	UPROPERTY(EditAnywhere, Category = Ball)
-		float JumpImpulse;
+	float JumpImpulse = 70000.0f;
 
 	/// Torque to apply when trying to roll ball
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Ball)
-		float RollTorque;
+	float RollTorque;
 
 	/// Indicates whether we can currently jump, use to prevent double jumping
 	bool bCanJump;
@@ -72,22 +71,32 @@ public:
 	/// Get the players new spawn location after death
 	FVector GetSpawnLocation();
 
-private:
+	ARollerPlayerState* GetPlayerState();
 
-	/// Speed in which to fire
-	UPROPERTY(EditAnywhere, Category = Firing)
-		float FireSpeed = 2500.0f;
+	void SetJumpImpulse(float Jump);
 
-	UPROPERTY(EditAnywhere, Category = Setup)
-		UClass* ProjectileBlueprint;
-
-	/// Set sensible default so player cannot continuously shoot
-	float ReloadTime = 3.0f;
+	float GetJumpImpulse();
 
 	/// Set default of when player last fired
 	float LastFireTime = 0.f;
 
+	bool bIsReloaded = false;
+
+private:
+
+	/// Speed in which to fire
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float FireSpeed = 2500.0f;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	UClass* ProjectileBlueprint;
+
+	/// Set sensible default so player cannot continuously shoot
+	float ReloadTime = 2.0f;
+
 	/// Location to spawn player after death
 	FVector SpawnLocation;
+
+	ARollerPlayerState* CurrentState;
 
 };

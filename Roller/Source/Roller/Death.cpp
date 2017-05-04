@@ -5,7 +5,7 @@
 
 #include "TP_RollingBall.h"
 #include "BallPlayerController.h"
-#include "Interactor.h"
+#include "RollerPlayerState.h"
 
 // Sets default values for this component's properties
 UDeath::UDeath()
@@ -23,9 +23,12 @@ void UDeath::BeginPlay()
 
 	Ball = GetPlayerBall(); // Get the current player
 
-	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn();
+	TriggeringActor = GetWorld()->GetFirstPlayerController()->GetPawn(); // Assign player as the triggering actor
 
-	Comp = Ball->GetRootPrimitiveComponent();
+	Comp = Ball->GetRootPrimitiveComponent(); // Get root component of player
+
+	CurrentState = Ball->GetPlayerState(); // Get the player state
+
 }
 
 // Called every frame
@@ -33,13 +36,41 @@ void UDeath::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (!Trigger) { return; }
+	if (!TriggerA) { return; }
+	if (!TriggerB) { return; }
+	if (!TriggerC) { return; }
+	if (!TriggerD) { return; }
+	if (!TriggerE) { return; }
+	if (!TriggerF) { return; }
+	if (CurrentState == nullptr) { return; }
 
 	if (!TriggeringActor) { return; }
 
-	// If Actor is on Trigger Volume,
-	if (Trigger->IsOverlappingActor(TriggeringActor)) {
-		PlayerDeath(); // Destroy player
+	/// Call to player state to update HUD when a checkpoint is reached
+	if (CurrentState->bCheckpointReached) {
+		if (GetWorld()->GetTimeSeconds() - CurrentState->LastCheckpointTime > CurrentState->CheckpointDelay) {
+			CurrentState->bCheckpointReached = false;
+		}
+	}
+
+	// If Actor is on Trigger Volume, kill player
+	if (TriggerA->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
+	} 
+	else if (TriggerB->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
+	}
+	else if (TriggerC->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
+	}
+	else if (TriggerD->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
+	}
+	else if (TriggerE->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
+	}
+	else if (TriggerF->IsOverlappingActor(TriggeringActor)) {
+		PlayerDeath();
 	}
 }
 
@@ -55,14 +86,16 @@ ATP_RollingBall* UDeath::GetPlayerBall() const
 void UDeath::PlayerDeath()
 {
 	if (Ball == nullptr) { return; }
+	if (CurrentState == nullptr) { return; }
 
-	if (Lives == 0) {
+	if (CurrentState->GetPlayerLives() == 0) {
 		UGameplayStatics::OpenLevel(this, FName("GameOver")); // If player has died too many times, open Game Over screen
 	}
 	else {
-		Comp->SetPhysicsLinearVelocity(FVector(0));
-		Comp->SetPhysicsAngularVelocity(FVector(0));
+		Comp->SetPhysicsLinearVelocity(FVector(0)); // Set linear velocity to 0 so player doesn't continue falling on spawn
+		Comp->SetPhysicsAngularVelocity(FVector(0)); // Set angular velocity to 0 so player doesn't continue rolling on spawn
 		Ball->SetActorLocation(Ball->GetSpawnLocation()); // Spawn player at checkpoint
-		Lives--; // Remove a life
+		CurrentState->SetPlayerLives(CurrentState->GetPlayerLives() - 1); // Remove a life
+		GetOwner()->GetActorLocation();
 	}
 }

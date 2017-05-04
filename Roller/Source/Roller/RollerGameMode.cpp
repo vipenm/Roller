@@ -2,3 +2,10 @@
 
 #include "Roller.h"
 #include "RollerGameMode.h"
+
+#include "RollerPlayerState.h"
+
+ARollerGameMode::ARollerGameMode()
+{
+	PlayerStateClass = ARollerPlayerState::StaticClass();
+}

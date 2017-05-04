@@ -34,7 +34,7 @@ private:
 	/// Find and setup input component
 	void SetupInputComponent();
 
-	/// Get the reach of the player
+	/// Get the reach of the player using vectors
 	FVector GetReachEnd();
 
 	/// Get reach start location

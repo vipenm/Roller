@@ -29,8 +29,7 @@ void UTeleport::BeginPlay()
 
 	if (Trigger == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s missing trigger "), *(Owner->GetName()));
-	}
-	
+	}	
 }
 
 // Called every frame
@@ -43,7 +42,7 @@ void UTeleport::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	if (!TriggeringActor) { return; }
 
 	if (Trigger->IsOverlappingActor(TriggeringActor)) { // Check if the player is overlapping the trigger volume
-		Location.Z += 75.f;
+		Location.Z += 20.f;
 		TriggeringActor->SetActorLocation(Location); // Teleport player
 	}
 }

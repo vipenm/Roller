@@ -7,11 +7,13 @@
 
 class ATP_RollingBall;
 class ABallPlayerController;
+class ARollerPlayerState;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROLLER_API UDeath : public UActorComponent
 {
 	GENERATED_BODY()
+
 
 public:
 	// Sets default values for this component's properties
@@ -26,8 +28,24 @@ public:
 	/// Get the current player
 	ATP_RollingBall* GetPlayerBall() const;
 
+	/// Trigger volumes surrounding the level
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* Trigger = nullptr;
+	ATriggerVolume* TriggerA = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* TriggerB = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* TriggerC = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* TriggerD = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* TriggerE = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* TriggerF = nullptr;
 
 	/// Actor that can trigger the trigger volume
 	AActor* TriggeringActor = nullptr;
@@ -40,9 +58,8 @@ private:
 	/// Kill player
 	void PlayerDeath();
 
-	/// Set lives of the player
-	int32 Lives = 3;
-
 	UPrimitiveComponent* Comp;
+
+	ARollerPlayerState* CurrentState = nullptr;
 
 };

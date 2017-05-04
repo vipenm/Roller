@@ -23,4 +23,4 @@ public:
 	UFont* HUDFont;
 
 	// Begin AHUD interface
-	virtual void DrawHUD() override;};
+	virtual void DrawHUD() override;};

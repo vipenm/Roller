@@ -5,15 +5,15 @@
 
 ARollerPlayerState::ARollerPlayerState()
 {
-	PlayerScore = 0;
+	PlayerLives = 5;
 }
 
-void ARollerPlayerState::SetPlayerScore(int Score)
+void ARollerPlayerState::SetPlayerLives(int32 Lives)
 {
-	PlayerScore = Score;
+	PlayerLives = Lives;
 }
 
-int ARollerPlayerState::GetPlayerScore()
+int32 ARollerPlayerState::GetPlayerLives()
 {
-	return PlayerScore;
+	return PlayerLives ;
 }

@@ -53,7 +53,7 @@ FVector UInteractor::GetReachStart()
 
 }
 
-/// Get the end point of the reach
+/// Get the end point of the reach using vectors
 FVector UInteractor::GetReachEnd() 
 {
 	FVector PlayerViewPointLocation;
@@ -103,7 +103,7 @@ void UInteractor::Grabbed()
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab,
 			NAME_None,
-			ComponentToGrab->GetOwner()->GetActorLocation(),
+			ComponentToGrab->GetOwner()->GetActorLocation(), // Grab it from objects origin
 			true
 		);
 	}
@@ -129,5 +129,5 @@ FHitResult UInteractor::GetObjectInReach()
 		TraceParameters
 	);
 
-	return LineTraceHit; // return data of object hit
+	return LineTraceHit; // return the object hit
 }

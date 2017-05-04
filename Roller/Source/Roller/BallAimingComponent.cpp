@@ -20,8 +20,9 @@ void UBallAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 	if (!Ball) { return; }
 
 	FVector FireVelocity;
-	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile")); /// Start aiming from the 'projectile' socket on the ball
+	FVector StartLocation = Ball->GetSocketLocation(FName("Projectile")); /// Start location of aiming from the 'projectile' socket on the ball
 
+	/// Calculate the projectile velocity 
 	bool bHaveAimDirection = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		FireVelocity,

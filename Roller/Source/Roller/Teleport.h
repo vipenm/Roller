@@ -32,5 +32,5 @@ private:
 	ATriggerVolume* Trigger = nullptr;
 
 	AActor* TriggeringActor = nullptr;
-	
+
 };

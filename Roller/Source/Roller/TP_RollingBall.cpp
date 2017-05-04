@@ -11,7 +11,7 @@
 
 ATP_RollingBall::ATP_RollingBall()
 {
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("StaticMesh'/Game/Materials/BallMesh2.BallMesh2'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> BallMesh(TEXT("StaticMesh'/Game/Meshes/BallMesh2.BallMesh2'"));
 
 	// Create mesh component for the ball
 	Ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ball0"));
@@ -29,7 +29,6 @@ ATP_RollingBall::ATP_RollingBall()
 
 	// Set up forces
 	RollTorque = 4000000.0f;
-	JumpImpulse = 70000.0f;
 	bCanJump = true; // Start being able to jump
 }
 
@@ -37,11 +36,7 @@ void ATP_RollingBall::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ARollerPlayerState* CurrentState = Cast<ARollerPlayerState>(this->PlayerState);
-	if (CurrentState)
-	{
-		CurrentState->SetPlayerScore(50);
-	}
+	CurrentState = GetPlayerState();
 }
 
 void ATP_RollingBall::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -96,7 +91,7 @@ void ATP_RollingBall::SetBallReference(UStaticMeshComponent* BallToSet)
 
 void ATP_RollingBall::Fire()
 {
-	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime; // Check if player can fire again
+	bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTime; // Check if player can fire again
 
 	if (Ball && bIsReloaded) { // If player can fire again
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>( // Spawn projectile
@@ -110,12 +105,30 @@ void ATP_RollingBall::Fire()
 	}
 }
 
+/// Called after checkpoint reached
 void ATP_RollingBall::SetSpawnLocation(FVector Location)
 {
 	SpawnLocation = Location;
+	CurrentState->bCheckpointReached = true;
+	CurrentState->LastCheckpointTime = GetWorld()->GetTimeSeconds();
 }
 
 FVector ATP_RollingBall::GetSpawnLocation()
 {
 	return SpawnLocation + FVector(0.f, 0.f, 70.0f);
+}
+
+ARollerPlayerState* ATP_RollingBall::GetPlayerState()
+{
+	return CurrentState = Cast<ARollerPlayerState>(this->PlayerState);
+}
+
+void ATP_RollingBall::SetJumpImpulse(float Jump)
+{
+	JumpImpulse = Jump;
+}
+
+float ATP_RollingBall::GetJumpImpulse()
+{
+	return JumpImpulse;
 }
